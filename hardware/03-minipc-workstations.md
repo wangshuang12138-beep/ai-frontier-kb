@@ -66,9 +66,9 @@
 | 尺寸形态 | 180×180×90.8mm 全金属 |
 | 操作系统 | Windows 11 Pro |
 | 大模型能力 | 官方宣称可跑 70B 级模型；社区实测（llmrun 估算口径）：**7B Q4_K_M 约 40 tok/s，14B 约 20 tok/s**，prefill 527 tok/s |
-| 参考价格 | **128G+2T ¥12999**（2025-08）；128G+4T ¥28599（2026-07）；PRO 495 版 ¥29998（2026-09）；海外 $1985 MSRP / £1899 |
+| 参考价格 | **128G+2T ¥12999**（2025-08）；128G+4T 官方定价 ¥28599（2026-07），**ZOL 渠道参考价已降至 ¥14699**（2026-09，价差大、购买前务必比价）；PRO 495 版 ¥29998（2026-09）；海外 $1985 MSRP / £1899 |
 
-来源：[IT之家 2025-08-11](https://www.ithome.com/0/874/596.htm)、[IT之家 2026-07-06](https://www.ithome.com/0/973/239.htm)、[IT之家 2026-09-28](https://www.ithome.com/1/007/973.htm)、[llmrun 设备页](https://llmrun.dev/device/beelink-gtr9-pro-128gb)、[notebookcheck 2025-08-11](https://www.notebookcheck.net/Beelink-releases-GTR9-Pro-mini-PC-with-AMD-Ryzen-AI-Max-395-and-up-to-128-GB-RAM.1084563.0.html)、[Total Group](https://totalgroup.co.uk/ai/hardware/beelink-gtr9-pro/)（2026-11-03 检索）
+来源：[IT之家 2025-08-11](https://www.ithome.com/0/874/596.htm)、[IT之家 2026-07-06](https://www.ithome.com/0/973/239.htm)、[IT之家 2026-09-28](https://www.ithome.com/1/007/973.htm)、[llmrun 设备页](https://llmrun.dev/device/beelink-gtr9-pro-128gb)、[notebookcheck 2025-08-11](https://www.notebookcheck.net/Beelink-releases-GTR9-Pro-mini-PC-with-AMD-Ryzen-AI-Max-395-and-up-to-128-GB-RAM.1084563.0.html)、[Total Group](https://totalgroup.co.uk/ai/hardware/beelink-gtr9-pro/)、[中关村在线扬州渠道价 2026-09-24](https://detail.zol.com.cn/2148/2147413/price.shtml?via=touch-bottom)（2026-11-03 检索）
 
 ### 2.2 Framework Desktop（模块化标杆）
 
