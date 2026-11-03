@@ -17,6 +17,9 @@ features:
   - title: 📐 概念谱系
     details: AgentOS 三层解读、arXiv 学术权威来源、2026 产业全景（vivo / 华为 / Rivet / Agno）
     link: /concepts/agentos
+  - title: 🧬 芯片发展代际
+    details: NPU 军备竞赛、NVIDIA 数据中心×Jetson 双线、国产芯片三条脉络——盒子是果，芯片是因
+    link: /chips/01-chip-generations
   - title: 📖 规格概念手册
     details: TOPS vs TFLOPS、稀疏与稠密、为什么内存带宽决定大模型速度——读规格表之前先读这个
     link: /hardware/00-specs-glossary
@@ -44,6 +47,7 @@ features:
 
 | 需求 | 入口 |
 |---|---|
+| 建立芯片概念 | [芯片发展代际速览](/chips/01-chip-generations) |
 | 为本地 LLM 选机器 | [通用迷你主机 · 对比总表](/hardware/03-minipc-workstations) |
 | 安防视频结构化 / 多路推理 | [国产芯片 · 对比总表](/hardware/02-domestic-npu-boxes) |
 | 机器人 / CUDA 生态刚需 | [NVIDIA 系 · 对比总表](/hardware/01-nvidia-jetson-dgx) |

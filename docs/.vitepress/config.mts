@@ -15,6 +15,12 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '概念', link: '/concepts/agentos' },
       {
+        text: '芯片',
+        items: [
+          { text: '芯片发展代际速览', link: '/chips/01-chip-generations' },
+        ],
+      },
+      {
         text: '硬件',
         items: [
           { text: '规格参数概念手册', link: '/hardware/00-specs-glossary' },
@@ -30,6 +36,12 @@ export default defineConfig({
         {
           text: '概念谱系',
           items: [{ text: 'AgentOS 解读与全景', link: '/concepts/agentos' }],
+        },
+      ],
+      '/chips/': [
+        {
+          text: '芯片代际',
+          items: [{ text: '芯片发展代际速览', link: '/chips/01-chip-generations' }],
         },
       ],
       '/hardware/': [
