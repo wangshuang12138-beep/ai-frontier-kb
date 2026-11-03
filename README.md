@@ -1,5 +1,7 @@
 # AI Frontier KB · AI 前沿知识体系
 
+
+**在线站点：https://wangshuang12138-beep.github.io/ai-frontier-kb/**（VitePress + GitHub Actions，push 到 main 自动更新）
 一个持续维护的 AI 前沿知识库：**概念谱系**（AgentOS 等）+ **硬件规格全对比**（AI 盒子 / 边缘算力 / 本地大模型主机）。
 
 维护者：xca + Kimi Claw ｜ 数据核实日期见各文件头部（首轮：2026-11-03）
@@ -8,17 +10,17 @@
 
 | 路径 | 内容 | 适合谁 |
 |---|---|---|
-| [concepts/agentos.md](concepts/agentos.md) | AgentOS 三层概念解读、学术权威定义谱系（arXiv 引用）、2026 产业全景（vivo/华为/Rivet/Agno） | 写材料、做汇报、建话语体系 |
-| [hardware/00-specs-glossary.md](hardware/00-specs-glossary.md) | 规格参数概念手册：TOPS vs TFLOPS、稀疏/稠密、内存带宽为何决定大模型速度、统一内存 vs 显存 | 读任何规格表之前先读这个 |
-| [hardware/01-nvidia-jetson-dgx.md](hardware/01-nvidia-jetson-dgx.md) | NVIDIA 系：DGX Spark / Jetson Thor / AGX Orin / Orin NX / Orin Nano Super | CUDA 生态刚需、机器人 |
-| [hardware/02-domestic-npu-boxes.md](hardware/02-domestic-npu-boxes.md) | 国产芯片：华为昇腾 / 算能 SOPHON / 瑞芯微 RK3588 / 爱芯 AX650N / 地平线 | 安防视频结构化、信创、多路推理 |
-| [hardware/03-minipc-workstations.md](hardware/03-minipc-workstations.md) | 通用平台：Mac mini M4/M4 Pro、Strix Halo 五杰（GTR9 Pro/Framework/EVO-X2/Z2 Mini/MS-S1 Max）、Intel/Qualcomm、树莓派 AI HAT+ | 本地大模型选型 |
+| [docs/concepts/agentos.md](concepts/agentos.md) | AgentOS 三层概念解读、学术权威定义谱系（arXiv 引用）、2026 产业全景（vivo/华为/Rivet/Agno） | 写材料、做汇报、建话语体系 |
+| [docs/hardware/00-specs-glossary.md](hardware/00-specs-glossary.md) | 规格参数概念手册：TOPS vs TFLOPS、稀疏/稠密、内存带宽为何决定大模型速度、统一内存 vs 显存 | 读任何规格表之前先读这个 |
+| [docs/hardware/01-nvidia-jetson-dgx.md](hardware/01-nvidia-jetson-dgx.md) | NVIDIA 系：DGX Spark / Jetson Thor / AGX Orin / Orin NX / Orin Nano Super | CUDA 生态刚需、机器人 |
+| [docs/hardware/02-domestic-npu-boxes.md](hardware/02-domestic-npu-boxes.md) | 国产芯片：华为昇腾 / 算能 SOPHON / 瑞芯微 RK3588 / 爱芯 AX650N / 地平线 | 安防视频结构化、信创、多路推理 |
+| [docs/hardware/03-minipc-workstations.md](hardware/03-minipc-workstations.md) | 通用平台：Mac mini M4/M4 Pro、Strix Halo 五杰（GTR9 Pro/Framework/EVO-X2/Z2 Mini/MS-S1 Max）、Intel/Qualcomm、树莓派 AI HAT+ | 本地大模型选型 |
 
 ## 阅读顺序建议
 
 1. 没硬件背景 → 先 `00-specs-glossary.md`（30 个概念）
 2. 为本地 LLM 选机器 → 直接 `03-minipc-workstations.md` 末尾「对比总表」
-3. 写 AgentOS 相关报告 → `concepts/agentos.md` 拿 arXiv 编号和 Gartner 口径
+3. 写 AgentOS 相关报告 → `docs/concepts/agentos.md` 拿 arXiv 编号和 Gartner 口径
 
 ## 数据纪律
 
