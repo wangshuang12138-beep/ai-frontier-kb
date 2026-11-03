@@ -1,3 +1,8 @@
+---
+title: AgentOS 概念解读与全景
+description: 三层概念、arXiv 学术权威谱系、2026 产业全景（vivo / 华为 / Rivet / Agno）
+---
+
 # AgentOS 概念解读与全景（2026-11）
 
 > 整理日期：2026-11-03。三个问题：AgentOS 是什么？权威定义从哪来？产业界谁在做什么？

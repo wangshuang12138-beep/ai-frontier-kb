@@ -1,3 +1,8 @@
+---
+title: NVIDIA 系：DGX Spark 与 Jetson 家族
+description: DGX Spark / Jetson Thor / AGX Orin / Orin NX / Orin Nano Super 全规格对比，官方口径与社区实测分开
+---
+
 # NVIDIA 系 AI 算力盒子/边缘计算平台规格对比
 
 > 检索与核实日期：2026-11-03 ｜ 币种：未注明者为人民币（¥），美元为 $

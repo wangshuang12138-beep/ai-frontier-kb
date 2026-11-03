@@ -1,0 +1,11 @@
+/* 宽表格横向滚动 + 单元格自动换行，适配大规格表 */
+.vp-doc table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+}
+.vp-doc th,
+.vp-doc td {
+  white-space: normal;
+  word-break: break-word;
+}
