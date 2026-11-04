@@ -9,3 +9,125 @@
   white-space: normal;
   word-break: break-word;
 }
+
+/* ========== 芯片时间轴 ========== */
+.chip-tl {
+  position: relative;
+  margin: 1.2rem 0 2rem;
+}
+.chip-tl::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--vp-c-divider);
+}
+
+/* 时代分隔带 */
+.tl-era {
+  position: relative;
+  margin: 1.8rem 0 1rem 24px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.tl-era .era-sub {
+  display: block;
+  font-weight: 400;
+  font-size: 0.78rem;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+.tl-era-1 { background: #4a5568; } /* GPU 单核时代：石墨 */
+.tl-era-2 { background: #2f6f4f; } /* NPU 登陆战：松绿 */
+.tl-era-3 { background: #33648f; } /* 大模型前夜：钢蓝 */
+.tl-era-4 { background: #a04838; } /* 军备竞赛：砖红 */
+
+/* 条目节点 */
+.tl-item {
+  position: relative;
+  margin: 0.6rem 0;
+  padding-left: 26px;
+}
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--vp-c-bg);
+  border: 3px solid #888;
+}
+.tl-item.t-gpu::before   { border-color: #2f6f4f; } /* GPU 训练卡 */
+.tl-item.t-gpum::before  { border-color: #4a7a8c; } /* GPU 模组 */
+.tl-item.t-gpunpu::before{ border-color: #33648f; } /* GPU+NPU SoC */
+.tl-item.t-npu::before   { border-color: #a04838; } /* NPU SoC/卡 */
+.tl-item.t-soc::before   { border-color: #6b5a8e; } /* CPU+GPU+NPU SoC */
+
+.tl-head {
+  line-height: 1.6;
+}
+.tl-year {
+  color: var(--vp-c-text-2);
+  font-size: 0.78rem;
+  margin-right: 0.45rem;
+  font-variant-numeric: tabular-nums;
+}
+.tl-name {
+  font-weight: 600;
+}
+.tl-tag {
+  display: inline-block;
+  margin-left: 0.45rem;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  line-height: 1.7;
+  vertical-align: 1px;
+  border: 1px solid currentColor;
+}
+.tl-tag.tag-gpu    { color: #2f6f4f; background: rgba(47, 111, 79, 0.09); }
+.tl-tag.tag-gpum   { color: #4a7a8c; background: rgba(74, 122, 140, 0.09); }
+.tl-tag.tag-gpunpu { color: #33648f; background: rgba(51, 100, 143, 0.09); }
+.tl-tag.tag-npu    { color: #a04838; background: rgba(160, 72, 56, 0.09); }
+.tl-tag.tag-soc    { color: #6b5a8e; background: rgba(107, 90, 142, 0.10); }
+
+.tl-note {
+  color: var(--vp-c-text-2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* 图例 */
+.tl-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+  font-size: 0.78rem;
+  color: var(--vp-c-text-2);
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tl-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.tl-legend .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 3px solid #888;
+}
+.tl-legend .dot.d-gpu    { border-color: #2f6f4f; }
+.tl-legend .dot.d-gpum   { border-color: #4a7a8c; }
+.tl-legend .dot.d-gpunpu { border-color: #33648f; }
+.tl-legend .dot.d-npu    { border-color: #a04838; }
+.tl-legend .dot.d-soc    { border-color: #6b5a8e; }
