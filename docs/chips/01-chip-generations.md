@@ -66,7 +66,7 @@
 
 <div class="tl-item t-gpu"><div class="tl-head"><span class="tl-year">2020-05</span><span class="tl-name">NVIDIA A100</span><span class="tl-tag tag-gpu">GPU 训练卡</span></div><div class="tl-note">312 TFLOPS FP16（dense），"算力基建"初代，一卡难求</div></div>
 
-<div class="tl-item t-soc"><div class="tl-head"><span class="tl-year">2020-11</span><span class="tl-name">Apple M1</span><span class="tl-tag tag-soc">CPU+GPU+NPU SoC</span></div><div class="tl-note">11 TOPS NE，**统一内存架构开山之作**（68 GB/s）——所有本地大模型故事的伏笔</div></div>
+<div class="tl-item t-soc"><div class="tl-head"><span class="tl-year">2020-11</span><span class="tl-name">Apple M1</span><span class="tl-tag tag-soc">CPU+GPU+NPU SoC</span></div><div class="tl-note">11 TOPS NE，<strong>统一内存架构开山之作</strong>（68 GB/s）——所有本地大模型故事的伏笔</div></div>
 
 <div class="tl-item t-npu"><div class="tl-head"><span class="tl-year">2021-07</span><span class="tl-name">地平线 征程 5</span><span class="tl-tag tag-npu">NPU SoC</span></div><div class="tl-note">128 TOPS，车载大算力首次破百</div></div>
 
