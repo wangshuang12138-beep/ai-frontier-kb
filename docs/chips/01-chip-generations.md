@@ -1,164 +1,129 @@
-# 芯片发展代际速览：盒子之下的那层"因"
+# 芯片发展时间轴：一颗芯片里的 CPU / GPU / NPU
 
 > 看盒子之前，先对芯片有概念——**盒子是"果"，芯片是"因"**。同一个盒子品类里装什么芯片，基本决定了它的算力上限、生态和生命周期。
-> 本文按厂商梳理 AI 芯片的代际演进，三张表分别覆盖：**PC/消费级芯片**、**NVIDIA 两条线**（数据中心训练 + 边缘 Jetson）、**国产边缘 AI 芯片**。
-> 数据截至 2026-11-03 检索；官方未公布的标 "—"，存疑的数字标 "约"。TOPS 口径混乱是行业常态，注意每行的备注。
+> 本文不再按厂商分表，而是把所有芯片放进**一条 2014–2026 的时间轴**：第一节先讲清每颗芯片的"性质"（CPU / GPU / NPU 的分工），第二节顺着时间看各家代际怎么一环扣一环。
+> 数据截至 2026-11-03 检索；官方未公布的标 "—"，存疑的数字标 "约"。TOPS 口径混乱是行业常态，注意每条的备注。
 
 ---
 
-## 一、PC / 消费级芯片：NPU 军备竞赛的四家
+## 一、先分清性质：CPU / GPU / NPU 到底是什么
 
-过去三年 PC 芯片的主线：CPU 挤牙膏，**NPU（神经网络处理器）从 10 TOPS 卷到 80 TOPS**。微软 Copilot+ PC 认证门槛是 NPU ≥ 40 TOPS——这个数字就是这场军备竞赛的刻度线。
+现代芯片很少是"一种"处理器。主流芯片都是 **SoC（System on Chip，片上系统）**——把 CPU、GPU、NPU 连同内存控制器、编解码器等一堆模块封装进同一颗硅片。所以谈"某款芯片的性质"，实际是在问三个问题：**它里面有没有这三样？各占多大面积？哪一样是卖点？**
 
-### Apple M 系列（Mac mini / Mac Studio 的那颗芯）
-
-| 代际 | 发布时间 | 制程 | Neural Engine | 统一内存带宽 | 备注 |
-|---|---|---|---|---|---|
-| M1 / Pro / Max / Ultra | 2020-11 / 2021 / 2022-03 | TSMC 5nm | 11 TOPS（Ultra 22） | 68 / 200 / 400 / 800 GB/s | 统一内存架构的开山之作 |
-| M2 / Pro / Max / Ultra | 2022-06 起 | 5nm 二代 | 15.8 TOPS（Ultra 31.6） | 100 / 200 / 400 / 800 GB/s | — |
-| M3 / Pro / Max | 2023-10 | TSMC 3nm | 官方未公布（约 18） | 100 / 150 / 300-400 GB/s | 3nm 首代 |
-| M4 / Pro / Max | 2024-05（iPad 首发）/ 2024-10（Mac） | N3E | **38 TOPS** | 120 / 273 / 410-546 GB/s | 首次追上 Copilot+ 门槛 |
-| M5 / Pro / Max | 2025-10（14" MBP 首发）/ 2026-03 | 改良 3nm | 官方未公布；转向 **GPU 内嵌神经加速器** | **153 GB/s**（基础款） | 每 GPU 核心内置 Neural Accelerator，ANE 不再是唯一路径 |
-| M6 | 2026-10（MacBook Pro） | — | 官方称"最高达 M4 的 2 倍"，TOPS 未公布 | — | 上线未满一个月，第三方实测数据还很少 |
-
-来源：[laptopmedia M 系对比](https://laptopmedia.com/cn/comparisons/apple-m4-vs-m3-pro-max-vs-m2-pro-max-ultra-vs-m1-pro-max-ultra-the-ultimate-benchmark-comparison/)（2026-03）、[jia.je M2 回顾](https://jia.je/hardware/2026/07/06/apple-m2/)（2026-07）、[localaimaster Mac 芯片盘点](https://localaimaster.com/blog/macbook-neo-a18-pro-vs-m6-which-one-is-actually-best-for-running-local-llms/)（2026-10），2026-11-03 检索。
-
-### Intel Core Ultra（Meteor Lake 起）
-
-| 代际 | 发布时间 | NPU 版本 | NPU TOPS | 平台总算力 | 制程 | 备注 |
-|---|---|---|---|---|---|---|
-| Meteor Lake（Ultra 100） | 2023-12 | NPU 3 | 约 11.5 | 约 34 | Intel 4 | 首代"AI PC"，NPU 算力不及格 |
-| Lunar Lake（Ultra 200V） | 2024-09 | NPU 4 | **48** | 120+ | TSMC N3B | 史上最大单代跃升（4 倍），专为轻薄本 |
-| Arrow Lake（Ultra 200S/H） | 2024-10 / 2025-01 | NPU 3 | 13 | 约 99 | TSMC N3B | 桌面/性能本线，NPU 原地踏步 |
-| Panther Lake（Ultra 300） | 2026-01（CES） | NPU 5 | **50** | 约 180 | **Intel 18A** | 英特尔 18A 工艺首秀，回归自家制程 |
-| Nova Lake | 路线图中 | NPU 6 | 74（爆料） | — | — | 截至发稿未正式上市 |
-
-来源：[ijiwei 端侧 AI 趋势](https://ijiwei.com/n/1104932)（2026-11 检索）、[新浪 Panther Lake 发布报道](https://finance.sina.com.cn/tech/discovery/2026-01-15/doc-inhhkrvt3306920.shtml)（2026-01）、[163 NPU6 爆料](https://www.163.com/dy/article/KFHG3T340552OI16.html)（2025-11）。
-
-### AMD Ryzen AI
-
-| 代际 | 发布时间 | NPU 架构 | NPU TOPS | 备注 |
+| 性质 | 全称 | 干什么 | 强项 | 弱项 |
 |---|---|---|---|---|
-| Ryzen 7040 Phoenix | 2023-05 | XDNA 1 | 10 | x86 阵营首个内置 NPU |
-| Ryzen 8040 Hawk Point | 2023-12 发布，2024 上市 | XDNA 1 | 16 | 小幅 refresh |
-| Ryzen AI 300 Strix Point | 2024-07 | XDNA 2 | 50（HX 375 为 55） | 首个站上 50 TOPS |
-| **Ryzen AI Max 300 Strix Halo** | 2025-01（CES） | XDNA 2 | 50 | **本地大玩家的关键：128GB 统一内存 + 256 GB/s，96GB 可划为显存** |
-| Ryzen AI 400（Gorgon Point） | 2025 末–2026 | — | 50–60 | Strix Point 优化版 |
+| **CPU** | 中央处理器 | 通用计算：操作系统、应用逻辑、任务调度 | 串行逻辑、分支判断，"什么都能干" | 并行规模小（几核到几十核），跑 AI 又慢又耗电 |
+| **GPU** | 图形处理器 | 图像渲染出身，靠成百上千个并行小核吃饭 | 大规模并行矩阵/向量运算——被大模型"挖角"后成了 AI 训练主力 | 通用逻辑弱、功耗高，纯推理的能效比不如 NPU |
+| **NPU** | 神经网络处理器 | 只做神经网络的核心运算：矩阵乘加（MAC） | AI 推理能效比最高（TOPS/W 通常领先 GPU 一个量级） | 除了 AI 几乎什么都不会，通用性 ≈ 0 |
 
-来源：[TechPowerUp XDNA 2 发布](https://www.techpowerup.com/316437/amd-announces-xdna-2-npu-architecture-for-next-gen-strix-point-mobile-processors-arriving-in-2024)（2023-12）、[什么值得买 2026 AI PC 实测汇总](https://post.smzdm.com/p/apq27p90/)（2026-06）。
+一个类比：后厨里，**CPU 是主厨**——什么菜都能做，但一次只做一道；**GPU 是切配军团**——一百个学徒同时切土豆丝，吞吐量惊人；**NPU 是定制寿司机**——只会卷寿司，但一小时三千卷还省电。而**内存带宽是出菜通道的宽度**——通道越宽大家越不堵门（这就是为什么本地大模型先看带宽，而不是先看 TOPS）。
 
-### Qualcomm 骁龙 X（Windows on Arm）
+**名字的坑**，看宣传页前先对口径：
 
-| 代际 | 发布时间 | NPU | NPU TOPS | 备注 |
-|---|---|---|---|---|
-| 8cx Gen 2 / Gen 3 | 2020 / 2021-12 | 早期 Hexagon | 29（Gen 3 平台口径） | 雷声大雨点小，生态没起来 |
-| Snapdragon X Elite / Plus | 2023-10 发布，2024-06 上市 | Hexagon（第 5 代） | **45** | 首发即过 Copilot+ 线，倒逼 x86 |
-| Snapdragon X2 Elite / Extreme | 2025-09-24 | Hexagon（第 6 代） | **80** | 3nm N3P + 第三代 Oryon CPU；LPDDR5x-9523 |
-| Snapdragon X2 Plus | 2026-01 披露 | Hexagon | 80（部分 HP 独占 SKU 85） | 补齐中端 |
+- NPU 各家叫法不同：苹果叫 **Neural Engine（NE）**、华为叫**达芬奇 NPU**、地平线叫 **BPU**、算能叫 **TPU**（跟谷歌 TPU 毫无关系）、寒武纪叫 **MLU**、NVIDIA 边缘线叫 **DLA**、Intel 旧称 VPU/GNA。
+- 反过来，**Tensor Core** 是 NVIDIA 塞进 GPU 里的 AI 单元——本质是"GPU 里长出的 NPU"；苹果 M5 起也把神经加速器塞回了 GPU 核心。这类"混血"让 NPU 和 GPU 的边界越来越模糊。
 
-来源：[凤凰网科技 X2 Elite 发布](https://tech.ifeng.com/c/8mvVx6HJrQW)（2025-09）、[C114 X2 Plus 曝光](https://www.c114.net.cn/industry/49128.html)（2026-01）、[CSDN X2 Elite 规格汇总](https://blog.csdn.net/weixin_38498942/article/details/160982187)（2026-05）。
+**读时间轴的标签约定**（每条芯片名后面的反引号标签）：
+
+- `GPU 训练卡` — 纯 GPU、无 CPU，插在服务器里干训练/推理（V100→B200 这条线）
+- `GPU 模组` — 卖点在 GPU，附带 CPU 配套（Jetson 早期、Nano）
+- `GPU+NPU SoC` — GPU 为主、内置 NPU/DLA 协处理器（Jetson Xavier 之后）
+- `NPU SoC` — NPU 是算力主力，CPU 只负责打杂调度（昇腾 310、算能、地平线、爱芯）
+- `CPU+GPU+NPU SoC` — 三样全有，PC/手机芯片的典型形态（Apple M、酷睿 Ultra、骁龙 X、RK3588）
 
 ---
 
-## 二、NVIDIA：数据中心与边缘两条并行的时间线
+## 二、总时间轴：2014 → 2026
 
-### 数据中心线（训练/推理的"战略纵深"）
+### 时代一 · 2014–2017：GPU 单核时代——AI 芯片 = GPU
 
-这条线决定了**边缘芯片的技术下放节奏**——Jetson 用的 GPU 架构永远落后数据中心一到两代，因为要先保数据中心供货。
+- **2014 · NVIDIA Jetson TK1** — `GPU 模组`｜Kepler 架构，嵌入式 AI 的"概念验证"机
+- **2015–2017 · Jetson TX1 / TX2** — `GPU 模组`｜Maxwell / Pascal，1 / 1.3 TFLOPS，完成模组化与工业化
+- **2017-05 · NVIDIA V100** — `GPU 训练卡`｜125 TFLOPS FP16，**首代 Tensor Core**，深度学习训练时代开启。注意 Tensor Core 本质是 GPU 内部集成的 AI 单元——"NPU 化"从这颗芯就开始了
 
-| 架构 | 旗舰 | 发布 | FP16 算力（约） | 标志性意义 |
-|---|---|---|---|---|
-| Volta | V100 | 2017-05 | 125 TFLOPS | **首代 Tensor Core**，深度学习训练时代开启 |
-| Ampere | A100 | 2020-05 | 312 TFLOPS（dense） | 疫情+大模型前夜，一卡难求的初代"算力基建" |
-| Hopper | H100 | 2022-03 | 990 TFLOPS | Transformer Engine，ChatGPT 时代的硬通货 |
-| Hopper  refresh | H200 | 2023-11 | 同 H100 | 141GB HBM3e，带宽 4.8 TB/s |
-| Blackwell | B200 / GB200 | 2024-03 发布 | 2.25 PFLOPS（dense）/ 4.5 PFLOPS（稀疏） | 双 die 封装 + NVLink-HBI |
-| Rubin | — | 2026 路线 | — | 2026 GTC 公布的下一代，与 HBM4 绑定 |
+> 这四年没有 NPU 什么事：端侧 AI 靠 GPU 硬跑，又费电又慢。**专用的神经引擎迟早要长出来。**
 
-来源：[CSDN AI 芯片分类汇总](https://blog.csdn.net/weixin_41194129/article/details/155787745)（2025-12）、[腾讯云社区 910C vs H100 对比](https://cloud.tencent.com/developer/article/2697481)（2026-06）。
+### 时代二 · 2018–2021：NPU 登陆战——端侧开始长"神经引擎"
 
-### 边缘线 Jetson（机器人/盒子用的就是这条线）
+- **2018-08 · Jetson AGX Xavier** — `GPU+NPU SoC`｜Volta GPU + 首代 DLA，32 TOPS，NVIDIA 边缘线第一次长出 NPU
+- **2018-10 · 华为昇腾 310** — `NPU SoC`｜达芬奇架构，16 TOPS INT8 / 8W，Atlas 200/500 盒子的心脏，国产边缘 AI 的起点
+- **2018 · 寒武纪 思元 270** — `NPU SoC`｜128 TOPS INT8，老牌 AI 芯片第一股
+- **2018 · 瑞芯微 RK3399Pro** — `CPU+GPU+NPU SoC`｜2.4 TOPS，国产消费级 SoC 第一次塞进 NPU
+- **2019-03 · Jetson Nano** — `GPU 模组`｜472 GFLOPS，价格屠夫，教学/创客市场引爆
+- **2019 · 地平线 征程 2** — `NPU SoC`｜4 TOPS，车载前装起步；**2019–2021 · 百度昆仑芯 1 代 / 2 代**（128–256 TOPS），互联网自用为主的云端支线
+- **2019 · 算能 BM1684** — `NPU SoC`｜17.6 TOPS，编解码之王，32 路解码盒子的心脏
+- **2019-08 · 华为昇腾 910** — `NPU 训练卡`｜256 TFLOPS FP16，首代国产云端训练芯片
+- **2019-11 · Jetson Xavier NX** — `GPU+NPU SoC`｜21 TOPS，Nano 与 AGX 之间的甜点
+- **2020-05 · NVIDIA A100** — `GPU 训练卡`｜312 TFLOPS FP16（dense），"算力基建"的初代，疫情 + 大模型前夜一卡难求
+- **2020–2021 · 地平线 征程 3（5 TOPS）/ 旭日 X3** — `NPU SoC`｜机器人开发圈知名（地瓜机器人 R1 等）
+- **2020-11 · Apple M1** — `CPU+GPU+NPU SoC`｜8 CPU + 8 GPU + 11 TOPS NE，**统一内存架构开山之作**（68 GB/s）——后面所有本地大模型故事的伏笔
+- **2021-07 · 地平线 征程 5** — `NPU SoC`｜128 TOPS，车载大算力首次破百
+- **2021 · 算能 BM1684X** — `NPU SoC`｜32 TOPS，1684 的翻倍版，当前出货主力
+- **2021-12 · 瑞芯微 RK3588（2022 量产）** — `CPU+GPU+NPU SoC`｜6 TOPS，**生态最省心**，AIoT 盒子的默认选项
 
-| 代际 | 发布时间 | GPU 架构 | 算力（INT8 TOPS / FP16） | 备注 |
-|---|---|---|---|---|
-| TK1 | 2014 | Kepler | — | 嵌入式 AI 的"概念验证" |
-| TX1 / TX2 | 2015 / 2017 | Maxwell / Pascal | 1 / 1.3 TFLOPS | 模组化与工业化 |
-| Jetson Nano | 2019-03 | Maxwell | 472 GFLOPS | 价格屠夫，教学/创客市场引爆 |
-| AGX Xavier | 2018-08 | Volta | 32 TOPS | 首代 DLA（深度学习加速器） |
-| Xavier NX | 2019-11 | Volta | 21 TOPS | Nano 与 AGX 之间的甜点 |
-| **Jetson Orin 家族** | 2022-03 | **Ampere** | Nano 40 / NX 100 / AGX 275 | 今天工业 AI 盒子的默认选型 |
-| Orin Nano Super / NX Super | 2024-12 | Ampere | 67 / 157 | 官方"解锁"固件，免费涨算力 |
-| **Jetson AGX Thor** | 2025 | **Blackwell** | 最高 2,070 FP4 稀疏 TFLOPS | Physical AI（人形机器人）专用，消费盒子暂无 |
+> 四年里 NPU 从"噱头"变成"标配"：PC/手机芯片没 NPU 不好意思开发布会；国产盒子芯片（算能、瑞芯微、地平线、爱芯）也在这波里完成原始积累。**今天盒子市场里"国产 NPU 系"这个品类，就是 2018–2021 年埋的种。**
 
-来源：[CSDN Jetson 早期演进](https://blog.csdn.net/qq_36245787/article/details/162860505)（2026-07）、[Premio Jetson 入门](https://premioinc.com/blogs/blog/introduction-to-nvidia-jetson)（2026-08 检索）、[网易 Orin 供应报道](https://www.163.com/dy/article/KS5ISO6E05561FZM.html)（2026-05）。
+### 时代三 · 2022–2023：大模型前夜——两条线同时点火
 
-**注意边缘线落后数据中心两代**：2022 年的 Orin 用 Ampere（数据中心 2020 年的架构），2025 年的 Thor 才追上 Blackwell（数据中心 2024 年）。买 Jetson 盒子本质上是在买"两年前的数据中心技术 + 今天的功耗封装"。
+- **2022-03 · NVIDIA H100** — `GPU 训练卡`｜990 TFLOPS FP16，Transformer Engine，ChatGPT 时代的硬通货
+- **2022-03 · Jetson Orin 家族** — `GPU+NPU SoC`｜Ampere GPU，Nano 40 / NX 100 / AGX 275 TOPS，**今天工业 AI 盒子的默认选型**
+- **2021–2022 · 爱芯 AX620A（14.4 TOPS）/ 华为昇腾 310B** — `NPU SoC`｜端侧推理的国产双补位；310B 公开口径 20–200 TOPS 说法混乱，以具体产品卡为准
+- **2022-11 · 爱芯 AX650N** — `NPU SoC`｜72.5 TOPS，端侧大模型宣传最热（社区 tok/s 实测稀缺）
+- **2022 起 · 摩尔线程 MTT S 系列** — `GPU 训练卡`｜国产消费/专业 GPU，图形 + AI 双线
+- **2023-05 · AMD Ryzen 7040（Phoenix）** — `CPU+GPU+NPU SoC`｜XDNA 1 NPU 10 TOPS，x86 阵营首颗内置 NPU
+- **2023 · 华为昇腾 910B / 算能 BM1688** — `NPU`｜910B 280–320 TFLOPS FP16（出口管制下的替代主力）；BM1688 32 TOPS INT8 / 16 TFLOPS FP16，SE 系列新主力
+- **2023-10 · Apple M3 / 高通骁龙 X Elite 发布** — `CPU+GPU+NPU SoC`｜M3 首代 3nm；X Elite 45 TOPS 首发即过微软 Copilot+ 门槛（40 TOPS），倒逼 x86 两家
+- **2023-11 · NVIDIA H200** — `GPU 训练卡`｜算力同 H100，141GB HBM3e + 4.8 TB/s——**"带宽优先"的信号已经写脸上了**
+- **2023-12 · Intel Meteor Lake（Core Ultra 100）** — `CPU+GPU+NPU SoC`｜NPU 3 约 11.5 TOPS，首代"AI PC"但 NPU 不及格——起了大早赶了晚集
+- **2023-12 · AMD Ryzen 8040（Hawk Point）** — `CPU+GPU+NPU SoC`｜16 TOPS，小幅 refresh
 
----
+> 大模型把算力饥渴传染到每个角落：数据中心抢 H100，PC 厂抢 Copilot+ 认证，盒子厂抢 Orin 供货。**NPU TOPS 正式取代 CPU 主频，成为发布会的第一屏数字。**
 
-## 三、国产边缘 AI 芯片
+### 时代四 · 2024–2026：军备竞赛——NPU 过线、带宽称王、双线合流
 
-国产芯片的三条脉络：**华为昇腾**（全栈自主，政企市场）、**安防/工业系**（算能、瑞芯微、地平线、爱芯，靠盒子生态打市场）、**云端训练系**（昇腾 910 系、寒武纪、百度昆仑，受出口管制倒逼）。
+- **2024-03 · NVIDIA B200 / GB200（Blackwell）** — `GPU 训练卡`｜2.25 PFLOPS FP16（dense），双 die 封装 + NVLink-HBI
+- **2024-04 · 地平线 征程 6 系列** — `NPU SoC`｜10–560 TOPS 一个架构覆盖辅助驾驶全场景
+- **2024-05（iPad 首发）/ 2024-10（Mac）· Apple M4 家族** — `CPU+GPU+NPU SoC`｜**38 TOPS 首次追上 Copilot+ 线**，带宽 120–546 GB/s
+- **2024-07 · AMD Ryzen AI 300（Strix Point）** — `CPU+GPU+NPU SoC`｜XDNA 2 NPU 50 TOPS，首个站上 50
+- **2024-09 · Intel Lunar Lake（Ultra 200V）** — `CPU+GPU+NPU SoC`｜NPU 4 **48 TOPS**，史上最大单代跃升（约 4 倍），专为轻薄本
+- **2024-10 / 2025-01 · Intel Arrow Lake（Ultra 200S/H）** — `CPU+GPU+NPU SoC`｜13 TOPS 原地踏步，桌面线还没想明白 NPU 用来干嘛
+- **2024-12 · Jetson Orin Nano/NX Super** — `GPU+NPU SoC`｜官方"解锁"固件，67 / 157 TOPS 免费涨
+- **2025-01 · AMD Ryzen AI Max 300（Strix Halo）** — `CPU+GPU+NPU SoC`｜NPU 50 TOPS 平平，但 **128GB 统一内存 + 256 GB/s、96GB 可划显存**——**本地大模型玩家的关键一跃**，当前性价比之王
+- **2025 · Jetson AGX Thor** — `GPU+NPU SoC`｜Blackwell 架构下放边缘，最高 2,070 FP4 稀疏 TFLOPS，Physical AI（人形机器人）专用，消费盒子暂无
+- **2025-09 · 高通 骁龙 X2 Elite / Extreme** — `CPU+GPU+NPU SoC`｜Hexagon 第 6 代 NPU **80 TOPS**，3nm N3P + 第三代 Oryon CPU
+- **2025 · 华为昇腾 910C 规模出货** — `NPU 训练卡`｜约 800 TFLOPS FP16（双 die），96GB HBM2e / 1.8 TB/s，约为 H100 的 40%，但 HBM 容量反超——又是带宽故事
+- **2025-10 · Apple M5** — `CPU+GPU+NPU SoC`｜**路线转折：每颗 GPU 核心内置 Neural Accelerator**，ANE 不再是唯一路径——NPU 能力开始"回流" GPU
+- **2026-01 · Intel Panther Lake（Ultra 300）/ 高通 X2 Plus** — `CPU+GPU+NPU SoC`｜NPU 5 达 50 TOPS + Intel 18A 工艺首秀；X2 Plus 补齐中端（部分 HP 独占 SKU 85 TOPS）
+- **2026-03 / 2026-10 · Apple M5 Pro / Max、M6** — `CPU+GPU+NPU SoC`｜M6 称神经加速"最高达 M4 两倍"，TOPS 未公布，上线未满一个月实测稀缺
+- **2026 · NVIDIA Rubin（路线图）** — `GPU 训练卡`｜与 HBM4 绑定的下一代，GTC 2026 公布
 
-### 华为昇腾（达芬奇架构）
-
-| 芯片 | 发布 | 定位 | 算力（约） | 备注 |
-|---|---|---|---|---|
-| 昇腾 310 | 2018-10 | 边缘推理 | 16 TOPS INT8 / 8W | Atlas 200/500 盒子的心脏 |
-| 昇腾 310P | 2021 | 推理卡 | 88 TOPS INT8 | Atlas 300I Pro |
-| 昇腾 310B | 2022 | 边缘推理 SoC | 公开口径 20–200 TOPS 说法不一 | 以具体产品卡为准，宣传口径混乱 |
-| 昇腾 910 | 2019-08 | 云端训练 | 256 TFLOPS FP16 | 首代国产训练芯片 |
-| 昇腾 910B | 2023 | 云端训练 | 280–320 TFLOPS FP16，64GB HBM2e | 出口管制下的替代主力 |
-| 昇腾 910C | 2025 规模出货 | 云端训练 | 约 800 TFLOPS FP16（双 die），96GB HBM2e / 1.8 TB/s | 约为 H100 的 40%（FP16），HBM 容量反超 |
-
-来源：[新浪《一文看懂华为昇腾芯片》](https://finance.sina.cn/tech/2025-12-01/detail-infzeece6200257.d.html)（2025-11）、[腾讯云社区 910C 分析](https://cloud.tencent.com/developer/article/2697481)（2026-06）、[iotdt 国产处理器对比](https://www.iotdt.com/news/xingyezixun/1251.html)（2025-10）。
-
-### 安防/工业系盒子芯片（你盒子里最可能装的几颗）
-
-| 厂商 | 芯片 | 发布 | INT8 TOPS | 一句定位 |
-|---|---|---|---|---|
-| 算能 | BM1684 | 2019 | 17.6 | 编解码之王，32 路解码盒子的心脏 |
-| 算能 | BM1684X | 2021 | 32 | 1684 的算力翻倍版，当前出货主力 |
-| 算能 | BM1688 | 2023 | 32（FP16 16 TFLOPS） | SE 系列新主力，端侧大模型宣传最热 |
-| 瑞芯微 | RK3399Pro | 2018 | 2.4 | 国产 NPU 开山，已被 3588 全面替代 |
-| 瑞芯微 | **RK3588** | 2021-12 发布 / 2022 量产 | 6 | **生态最省心**，AIoT 盒子默认选项 |
-| 瑞芯微 | RK3576 | 2024 | 6 | 3588 的低成本姊妹 |
-| 地平线 | 征程 2 | 2019 | 4 | 车载前装起步 |
-| 地平线 | 征程 3 / 旭日 X3 | 2020 / 2022 | 5 | 机器人开发圈知名（地瓜机器人 R1 等） |
-| 地平线 | 征程 5 | 2021-07 | **128** | 车载大算力破百 |
-| 地平线 | 征程 6 系列 | 2024-04 | 10–560（家族） | 一个架构覆盖辅助驾驶全场景 |
-| 爱芯 | AX620A | 2021 | 14.4 | 端侧视觉 |
-| 爱芯 | **AX650N** | 2022-11 | 72.5 | 端侧大模型宣传最热（社区 tok/s 实测稀缺） |
-| 晶晨 | A311D / A311D2 | 2019 / 2021 | 5 | 电视盒子系边缘 AI |
-
-来源：[朗锐创新四方案对比](https://www.loongray.com/hangye/167.html)（2026-06）、[iotdt 国产处理器对比](https://www.iotdt.com/news/xingyezixun/1251.html)（2025-10）。
-
-### 云端训练系（了解坐标即可）
-
-| 厂商 | 芯片 | 时间 | 算力（约） | 备注 |
-|---|---|---|---|---|
-| 寒武纪 | 思元 270 | 2018 | 128 TOPS INT8 | 老牌 AI 芯片第一股 |
-| 寒武纪 | 思元 220 | 2019 | 8 TOPS | 边缘推理 |
-| 寒武纪 | 思元 370 | 2021 | 256 TOPS | 云端推理 |
-| 百度 | 昆仑芯 1 代 / 2 代 | 2020 / 2021 | 128–256 TOPS | 互联网自用为主 |
-| 摩尔线程 | MTT S 系列 | 2022 起 | — | 国产消费/专业 GPU，图形+AI 双线 |
+> 三个终局信号：**① NPU 门槛被全员跨过之后，战场转向带宽**——Strix Halo、H200、910C 全是带宽故事；**② 边缘吃不上热饭**——Thor 才追上 Blackwell，落后数据中心两年是常态，买 Jetson 盒子本质是在买"两年前的数据中心技术 + 今天的功耗封装"；**③ NPU 与 GPU 的边界开始模糊**——苹果把神经加速器塞回 GPU，M5 之后"这颗芯片的 NPU 在哪"可能就是个错问题了。
 
 ---
 
-## 四、怎么读这三张表：四条规律
+## 三、怎么读这条时间轴：四条规律
 
-**1. TOPS 是通胀最严重的数字。** 同一代芯片，厂商会同时给三个口径：NPU TOPS、GPU TOPS、平台总算力。Apple 只报 Neural Engine，Intel 爱报平台总算力，NVIDIA 的 Jetson 直接报稀疏 INT8。跨表比较前先对齐口径——这就是为什么我们在 [规格参数概念手册](../hardware/00-specs-glossary.md) 里单列了一章讲 TOPS 的水分。
+**1. TOPS 是通胀最严重的数字。** 同一代芯片，厂商会同时给三个口径：NPU TOPS、GPU TOPS、平台总算力。Apple 只报 Neural Engine，Intel 爱报平台总算力，NVIDIA 的 Jetson 直接报稀疏 INT8。跨条目比较前先对齐口径——这就是为什么我们在 [规格参数概念手册](../hardware/00-specs-glossary.md) 里单列了一章讲 TOPS 的水分。
 
-**2. 代际节奏不同，买盒子的窗口期就不同。** NVIDIA 数据中心 2 年一代、Jetson 3 年一代、Apple M 系约 18 个月、国产边缘芯片 2-3 年一代。**新品发布后的 6-12 个月是价格最不稳定的窗口**——Strix Halo 盒子官方标价与渠道价差近一半，就是品类溢价期的活样本。
+**2. 代际节奏不同，买盒子的窗口期就不同。** NVIDIA 数据中心 2 年一代、Jetson 3 年一代、Apple M 系约 18 个月、国产边缘芯片 2–3 年一代。**新品发布后的 6–12 个月是价格最不稳定的窗口**——Strix Halo 盒子官方标价与渠道价差近一半，就是品类溢价期的活样本。
 
-**3. 芯片决定上限，盒子决定下限。** 同一块 RK3588，散热和供电设计好的盒子能满血跑 6 TOPS 不降频，设计差的只能跑出七折；Strix Halo 整机 70-120W 的功耗释放差异，直接拉开 40% 以上的实测性能。**看盒子参数时，芯片型号只告诉你"天花板在哪"，持续性能（TDP/散热）才告诉你"你实际能站多高"。**
+**3. 芯片决定上限，盒子决定下限。** 同一块 RK3588，散热和供电设计好的盒子能满血跑 6 TOPS 不降频，设计差的只有七折；Strix Halo 整机 70–120W 的功耗释放差异，直接拉开 40% 以上的实测性能。**芯片型号只告诉你"天花板在哪"，持续性能（TDP/散热）才告诉你"实际能站多高"。**
 
-**4. 对本地大模型，芯片代际里最重要的不是 TOPS 是带宽。** 回看第一张表：M4 的 NE 只有 38 TOPS，但 120 GB/s 带宽能跑 32B 模型；高通 X2 Elite NPU 80 TOPS 很唬人，可 NPU 跑不了 LLM decode，带宽只有 Extreme 款的 228 GB/s 能看。**decode 速度 ≈ 带宽 ÷ 模型字节数**——选本地大模型芯片时，先看内存带宽那一列。
+**4. 对本地大模型，芯片代际里最重要的不是 TOPS 是带宽。** 回看时间轴：M4 的 NE 只有 38 TOPS，但 120 GB/s 带宽能跑 32B 模型；高通 X2 Elite NPU 80 TOPS 很唬人，可 NPU 跑不了 LLM decode，能看的只有 Extreme 款的 228 GB/s。**decode 速度 ≈ 带宽 ÷ 模型字节数**——选本地大模型芯片时，先看带宽那一栏。
 
 ---
+
+## 数据来源
+
+**PC / 消费级**：[laptopmedia M 系对比](https://laptopmedia.com/cn/comparisons/apple-m4-vs-m3-pro-max-vs-m2-pro-max-ultra-vs-m1-pro-max-ultra-the-ultimate-benchmark-comparison/)（2026-03）、[ijiwei 端侧 AI 趋势](https://ijiwei.com/n/1104932)（2026-11 检索）、[新浪 Panther Lake 报道](https://finance.sina.com.cn/tech/discovery/2026-01-15/doc-inhhkrvt3306920.shtml)（2026-01）、[163 NPU6 爆料](https://www.163.com/dy/article/KFHG3T340552OI16.html)（2025-11）、[TechPowerUp XDNA 2](https://www.techpowerup.com/316437/amd-announces-xdna-2-npu-architecture-for-next-gen-strix-point-mobile-processors-arriving-in-2024)（2023-12）、[什么值得买 2026 AI PC 实测汇总](https://post.smzdm.com/p/apq27p90/)（2026-06）、[凤凰网科技 X2 Elite](https://tech.ifeng.com/c/8mvVx6HJrQW)（2025-09）、[C114 X2 Plus](https://www.c114.net.cn/industry/49128.html)（2026-01）
+
+**NVIDIA**：[CSDN AI 芯片分类汇总](https://blog.csdn.net/weixin_41194129/article/details/155787745)（2025-12）、[腾讯云社区 910C vs H100](https://cloud.tencent.com/developer/article/2697481)（2026-06）、[CSDN Jetson 早期演进](https://blog.csdn.net/qq_36245787/article/details/162860505)（2026-07）、[Premio Jetson 入门](https://premioinc.com/blogs/blog/introduction-to-nvidia-jetson)（2026-08 检索）、[网易 Orin 供应报道](https://www.163.com/dy/article/KS5ISO6E05561FZM.html)（2026-05）
+
+**国产**：[新浪《一文看懂华为昇腾芯片》](https://finance.sina.cn/tech/2025-12-01/detail-infzeece6200257.d.html)（2025-11）、[iotdt 国产处理器对比](https://www.iotdt.com/news/xingyezixun/1251.html)（2025-10）、[朗锐创新四方案对比](https://www.loongray.com/hangye/167.html)（2026-06）
 
 ## 相关阅读
 
 - [规格参数概念手册](../hardware/00-specs-glossary.md) — TOPS、带宽、显存怎么读
+- [NVIDIA 系盒子](../hardware/01-nvidia-jetson-dgx.md) — 第二节 Jetson 时间轴的工程化成品
+- [国产 NPU 盒子](../hardware/02-domestic-npu-boxes.md) — 国产脉络芯片的盒子形态
 - [通用迷你主机（本地大模型选型）](../hardware/03-minipc-workstations.md) — 把"带宽决定论"用到选购上
-- [国产 NPU 盒子](../hardware/02-domestic-npu-boxes.md) — 第三节芯片的工程化成品
