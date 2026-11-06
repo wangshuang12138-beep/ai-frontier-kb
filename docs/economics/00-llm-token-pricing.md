@@ -1,6 +1,7 @@
 ---
 title: 大模型 API Token 计费方案调研
 ---
+> 📊 网页版（商务简约风单页）：[pricing.html](/ai-frontier-kb/pricing.html)
 
 # 大模型 API Token 计费方案调研
 

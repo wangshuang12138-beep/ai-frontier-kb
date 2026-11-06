@@ -1,6 +1,7 @@
 ---
 title: AI 服务定价对比与差异分析
 ---
+> 📊 网页版（商务简约风单页）：[pricing.html](/ai-frontier-kb/pricing.html)
 
 # AI 服务定价对比与差异分析
 

@@ -1,6 +1,7 @@
 ---
 title: 智能体（Agent）产品收费方案调研
 ---
+> 📊 网页版（商务简约风单页）：[pricing.html](/ai-frontier-kb/pricing.html)
 
 # 智能体（Agent）产品收费方案调研
 

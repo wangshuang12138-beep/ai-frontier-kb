@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 定价全景 · 大模型 Token 计费 × 智能体收费（2026-11 快照）</title>
+<meta name="description" content="2026 年国内外大模型 API Token 计费方案与智能体产品收费方案调研：旗舰分档价格、计费模式、差异分析。每个关键数字附官方来源与检索日期。">
+<style>
+  /* ============================================================
+     设计参考：Linear 的排版密度 × Stripe 定价页的表格节奏
+     × Vercel 文档的克制用色。白底近黑，单色锚点，零渐变。
+     ============================================================ */
+  :root {
+    --bg: #ffffff;
+    --bg-subtle: #f7f8fa;
+    --ink: #131519;
+    --ink-2: #3d434d;
+    --muted: #6b7280;
+    --line: #e6e8ee;
+    --line-strong: #d3d7e0;
+    --accent: #1a56db;
+    --accent-ink: #1242ae;
+    --accent-bg: #eef3fe;
+    --good: #067647;
+    --radius: 10px;
+    --max: 1120px;
+    --font: "Inter", -apple-system, "SF Pro Text", "Segoe UI", "PingFang SC",
+            "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-ink); text-decoration: underline; }
+
+  /* ---------- 顶栏 ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,.88);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto; padding: 0 24px;
+    height: 60px; display: flex; align-items: center; gap: 28px;
+  }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 650; font-size: 14px; color: var(--ink); letter-spacing: .01em; }
+  .brand:hover { text-decoration: none; }
+  .brand-mark { width: 18px; height: 18px; border-radius: 5px; background: var(--ink); position: relative; flex: none; }
+  .brand-mark::after { content: ""; position: absolute; inset: 5px; border-radius: 2px; background: var(--bg); }
+  .brand small { color: var(--muted); font-weight: 500; }
+  .nav-links { margin-left: auto; display: flex; gap: 4px; }
+  .nav-links a {
+    color: var(--ink-2); font-size: 13.5px; padding: 7px 12px; border-radius: 7px; font-weight: 500;
+  }
+  .nav-links a:hover { background: var(--bg-subtle); color: var(--ink); text-decoration: none; }
+  .nav-cta {
+    font-size: 13px; font-weight: 600; color: var(--ink) !important;
+    border: 1px solid var(--line-strong); border-radius: 7px; padding: 6px 13px !important;
+  }
+  .nav-cta:hover { border-color: var(--ink); background: var(--bg) !important; }
+
+  /* ---------- Hero ---------- */
+  .hero { max-width: var(--max); margin: 0 auto; padding: 88px 24px 56px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; font-weight: 600; color: var(--accent-ink);
+    background: var(--accent-bg); border-radius: 999px; padding: 5px 12px; margin-bottom: 26px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 50px); line-height: 1.14; letter-spacing: -.025em;
+    font-weight: 700; max-width: 21em;
+  }
+  .hero p.lede { margin-top: 20px; font-size: 17px; color: var(--ink-2); max-width: 40em; }
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .stat { flex: 1 1 180px; padding: 20px 24px; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: 0; }
+  .stat b { display: block; font-size: 26px; letter-spacing: -.02em; font-weight: 700; }
+  .stat span { font-size: 12.5px; color: var(--muted); font-weight: 500; }
+
+  /* ---------- 章节骨架 ---------- */
+  section { max-width: var(--max); margin: 0 auto; padding: 64px 24px; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  .sec-no { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; flex: none; }
+  .sec-head h2 { font-size: 26px; letter-spacing: -.02em; font-weight: 700; }
+  .sec-desc { color: var(--ink-2); max-width: 46em; margin-bottom: 36px; font-size: 14.5px; }
+  .sec-desc code, td code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12.5px; background: var(--bg-subtle); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+
+  h3.sub { font-size: 16px; font-weight: 650; margin: 36px 0 14px; display: flex; align-items: center; gap: 10px; }
+  h3.sub::before { content: ""; width: 3px; height: 14px; background: var(--ink); border-radius: 2px; }
+
+  /* ---------- Tabs ---------- */
+  .tabs { display: inline-flex; background: var(--bg-subtle); border: 1px solid var(--line); border-radius: 9px; padding: 3px; margin-bottom: 18px; }
+  .tabs button {
+    font: inherit; font-size: 13.5px; font-weight: 600; color: var(--muted);
+    background: none; border: 0; padding: 7px 18px; border-radius: 7px; cursor: pointer;
+  }
+  .tabs button.active { background: var(--bg); color: var(--ink); box-shadow: 0 1px 2px rgba(16,24,40,.08); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fade .25s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
+
+  /* ---------- 表格 ---------- */
+  .tbl-wrap { border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; background: var(--bg); }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  th {
+    text-align: left; font-size: 11.5px; font-weight: 650; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .06em;
+    padding: 11px 16px; border-bottom: 1px solid var(--line-strong); background: var(--bg-subtle);
+    white-space: nowrap;
+  }
+  td { padding: 13px 16px; border-bottom: 1px solid var(--line); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: #fafbfc; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  td .price { font-weight: 650; }
+  td .model { font-weight: 600; font-size: 13.5px; }
+  td .vendor { color: var(--muted); font-size: 12.5px; display: block; margin-top: 1px; }
+  .pill {
+    display: inline-block; font-size: 11.5px; font-weight: 600; padding: 2px 8px;
+    border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line);
+    color: var(--ink-2); white-space: nowrap;
+  }
+  .pill.hl { background: var(--accent-bg); border-color: #c9d9fb; color: var(--accent-ink); }
+  .pill.free { background: #ecfdf3; border-color: #bbe7cf; color: var(--good); }
+  .tbl-note { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+  .tbl-note a { font-weight: 500; }
+
+  /* ---------- 计费模式 pills ---------- */
+  .modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 8px; }
+  .mode { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+  .mode b { display: block; font-size: 13.5px; margin-bottom: 4px; }
+  .mode span { font-size: 12.5px; color: var(--muted); }
+  .mode em { display: block; font-style: normal; font-size: 12px; color: var(--accent-ink); margin-top: 8px; font-weight: 600; }
+
+  /* ---------- 洞察卡片 ---------- */
+  .insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+  .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 20px; background: var(--bg); }
+  .card .idx { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+  .card h4 { font-size: 15.5px; font-weight: 650; margin: 8px 0 8px; letter-spacing: -.01em; }
+  .card p { font-size: 13.5px; color: var(--ink-2); }
+  .card p b { color: var(--ink); }
+
+  .callout {
+    margin-top: 26px; border: 1px solid var(--line-strong); border-left: 3px solid var(--ink);
+    border-radius: var(--radius); padding: 22px 24px; background: var(--bg-subtle);
+  }
+  .callout h4 { font-size: 15.5px; font-weight: 700; margin-bottom: 8px; }
+  .callout p { font-size: 14px; color: var(--ink-2); max-width: 60em; }
+  .callout p + p { margin-top: 8px; }
+
+  /* ---------- 来源区 ---------- */
+  .src-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .src-col { padding: 20px 22px; }
+  .src-col + .src-col { border-left: 1px solid var(--line); }
+  .src-col h5 { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 12px; }
+  .src-col ul { list-style: none; }
+  .src-col li { font-size: 13px; padding: 5px 0; display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed var(--line); }
+  .src-col li:last-child { border-bottom: 0; }
+  .src-col li span { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+  footer { border-top: 1px solid var(--line); margin-top: 32px; }
+  .foot-inner { max-width: var(--max); margin: 0 auto; padding: 32px 24px 48px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: 12.5px; color: var(--muted); }
+  .foot-inner a { font-weight: 500; }
+  .foot-inner .right { margin-left: auto; display: flex; gap: 18px; }
+
+  @media (max-width: 720px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero { padding: 56px 20px 40px; }
+    section { padding: 48px 20px; }
+    .src-col + .src-col { border-left: 0; border-top: 1px solid var(--line); }
+    .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+    .stat:last-child { border-bottom: 0; }
+  }
+  @media print {
+    .nav { display: none; }
+    section { padding: 28px 0; }
+    .tab-panel { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 顶栏 ================= -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="brand-mark"></span>AI 定价全景 <small>/ 2026-11</small></a>
+    <div class="nav-links">
+      <a href="#llm">① Token 计费</a>
+      <a href="#agent">② 智能体收费</a>
+      <a href="#analysis">③ 差异分析</a>
+      <a class="nav-cta" href="https://github.com/wangshuang12138-beep/ai-frontier-kb" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= Hero ================= -->
+<header class="hero" id="top">
+  <div class="eyebrow"><span class="dot"></span>调研快照 · 2026-11-06 · 价格为快照价，采购前以厂商当期页面为准</div>
+  <h1>大模型 Token 计费与智能体收费，一份能拿去开会的全景对比</h1>
+  <p class="lede">覆盖国内外 11 家大模型厂商 API 定价与 10 个智能体产品收费方案。美元与人民币分列不折算——厂商自己都不按购买力平价定价，折算只会制造虚假精度。每个关键数字可在文末核对官方来源。</p>
+  <div class="hero-stats">
+    <div class="stat"><b>11 家</b><span>大模型厂商 API 定价</span></div>
+    <div class="stat"><b>10 个</b><span>智能体产品 / 平台</span></div>
+    <div class="stat"><b>6 种</b><span>计费模式（含峰谷分时）</span></div>
+    <div class="stat"><b>0 处</b><span>无来源数字（查不到写 —）</span></div>
+  </div>
+</header>
+
+<!-- ================= ① Token 计费 ================= -->
+<section id="llm">
+  <div class="sec-head"><span class="sec-no">01</span><h2>大模型 API Token 计费</h2></div>
+  <p class="sec-desc">计价单位：每百万 tokens，输入 / 输出分开。旗舰档看输出价（Agent 时代输出才是消耗大头），轻量档看走量成本，缓存价看厂商的真实边际成本。</p>
+
+  <h3 class="sub">六种计费模式</h3>
+  <div class="modes">
+    <div class="mode"><b>纯按量</b><span>输入/输出分价，按实际消耗</span><em>OpenAI · Anthropic · Kimi</em></div>
+    <div class="mode"><b>输入长度阶梯</b><span>输入越长单价越高（≤32K / >32K）</span><em>豆包 1.6 · GPT-5.5（>272K）</em></div>
+    <div class="mode"><b>峰谷分时</b><span>高峰加价、非高峰半价</span><em>DeepSeek（业界唯一）</em></div>
+    <div class="mode"><b>缓存分层</b><span>缓存命中价 = 输入价的 2%–25%</span><em>DeepSeek · Claude · Kimi · 豆包</em></div>
+    <div class="mode"><b>Batch 5 折</b><span>异步批量调用半价</span><em>Anthropic · Gemini · 阿里百炼</em></div>
+    <div class="mode"><b>订阅套餐</b><span>月度 Token Plan，批发价换零售价</span><em>腾讯 TokenHub · MiniMax</em></div>
+  </div>
+
+  <h3 class="sub">旗舰模型分档价</h3>
+  <div class="tabs" role="tablist">
+    <button class="active" data-tab="global" role="tab">国外厂商（USD / 1M）</button>
+    <button data-tab="china" role="tab">国内厂商（CNY / 1M）</button>
+  </div>
+
+  <div class="tbl-wrap tab-panel active" id="tab-global">
+    <table>
+      <thead><tr><th>厂商</th><th>旗舰模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存命中</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><td><span class="model">OpenAI</span></td><td><code>GPT-5.6 Sol</code></td><td class="num"><span class="price">$4.00</span></td><td class="num"><span class="price">$20.00</span></td><td class="num">$0.40</td><td><span class="pill hl">促销 ≥ 11-21</span></td></tr>
+        <tr><td><span class="model">Anthropic</span></td><td><code>Claude Opus 5.5</code></td><td class="num"><span class="price">$4.00</span></td><td class="num"><span class="price">$20.00</span></td><td class="num">$0.20</td><td>Batch 半价</td></tr>
+        <tr><td><span class="model">Google</span></td><td><code>Gemini 4 Argon</code></td><td class="num"><span class="price">$2.00</span></td><td class="num"><span class="price">$10.00</span></td><td class="num">—</td><td><span class="pill hl">发布价 ≤ 11-30</span></td></tr>
+        <tr><td><span class="model">xAI</span></td><td><code>Grok 4.7</code></td><td class="num"><span class="price">$2.00</span></td><td class="num"><span class="price">$6.00</span></td><td class="num">—</td><td>&lt;200K 上下文档</td></tr>
+        <tr><td><span class="model">DeepSeek</span></td><td><code>deepseek-v4-pro</code></td><td class="num"><span class="price">$0.66</span><span class="vendor">非高峰</span></td><td class="num"><span class="price">$1.98</span></td><td class="num">≈$0.02</td><td><span class="pill hl">高峰 ×2（峰谷制）</span></td></tr>
+        <tr><td><span class="model">Kimi 月之暗面</span></td><td><code>K3.1 Pro</code></td><td class="num"><span class="price">$2.00</span></td><td class="num"><span class="price">$10.00</span></td><td class="num">$0.20</td><td>1M 上下文</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tbl-wrap tab-panel" id="tab-china">
+    <table>
+      <thead><tr><th>厂商</th><th>旗舰模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存命中</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><td><span class="model">腾讯混元</span></td><td><code>Hy3</code></td><td class="num"><span class="price">¥1.00</span></td><td class="num"><span class="price">¥4.00</span></td><td class="num">¥0.25</td><td><span class="pill hl">Apache 2.0 开源</span></td></tr>
+        <tr><td><span class="model">MiniMax</span></td><td><code>M3 ≤512K</code></td><td class="num"><span class="price">¥3.15</span></td><td class="num"><span class="price">¥12.60</span></td><td class="num">¥0.63</td><td><span class="pill hl">「永久五折」刊例</span></td></tr>
+        <tr><td><span class="model">智谱</span></td><td><code>GLM-5.3</code></td><td class="num"><span class="price">¥8.00</span></td><td class="num"><span class="price">¥28.00</span></td><td class="num">¥2.00</td><td>1M 上下文</td></tr>
+        <tr><td><span class="model">字节豆包</span></td><td><code>Seed-Evolving</code></td><td class="num"><span class="price">¥6.00</span></td><td class="num"><span class="price">¥30.00</span></td><td class="num">¥1.20</td><td>Coding & Agent 向</td></tr>
+        <tr><td><span class="model">阿里百炼</span></td><td><code>qwen3.8-max</code></td><td class="num"><span class="price">¥12.00</span></td><td class="num"><span class="price">¥36.00</span></td><td class="num">—</td><td>Batch 半价</td></tr>
+        <tr><td><span class="model">字节豆包</span></td><td><code>Seed-1.6（≤32K）</code></td><td class="num"><span class="price">¥0.80</span></td><td class="num"><span class="price">¥8.00</span></td><td class="num">—</td><td>按输入长度区间统一定价</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">DeepSeek 高峰 = 北京时间周一至周五 09:00–12:00 / 14:00–18:00，非高峰半价。完整分档（含 GPT-5.6 Terra/Luna、Claude 全系、GLM-4.7-Flash 免费档等）见 <a href="https://github.com/wangshuang12138-beep/ai-frontier-kb/blob/main/docs/economics/00-llm-token-pricing.md" target="_blank" rel="noopener">明细文档</a>。</p>
+
+  <h3 class="sub">轻量档（走量模型）</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th>看点</th></tr></thead>
+      <tbody>
+        <tr><td><span class="model">Gemini 2.5 Flash-Lite</span></td><td class="num">$0.10</td><td class="num">$0.40</td><td>海外地板价</td></tr>
+        <tr><td><span class="model">Claude Haiku 5.5</span></td><td class="num">$0.10</td><td class="num">$0.50</td><td>同价档更强工具能力</td></tr>
+        <tr><td><span class="model">deepseek-flash（非高峰）</span></td><td class="num">$0.15</td><td class="num">$0.60</td><td>峰谷半价后击穿地板</td></tr>
+        <tr><td><span class="model">GPT-5.6 Luna</span></td><td class="num">$0.20</td><td class="num">$1.20</td><td>OpenAI 体系内最廉</td></tr>
+        <tr><td><span class="model">qwen-turbo</span></td><td class="num">¥0.30</td><td class="num">¥0.60</td><td>国内走量主力</td></tr>
+        <tr><td><span class="model">GLM-4.7-Flash</span></td><td class="num"><span class="pill free">免费</span></td><td class="num"><span class="pill free">免费</span></td><td>生态武器：买走"第一次调用"</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= ② 智能体收费 ================= -->
+<section id="agent">
+  <div class="sec-head"><span class="sec-no">02</span><h2>智能体（Agent）收费方案</h2></div>
+  <p class="sec-desc">分两类：<b>通用 Agent 订阅</b>（卖个人额度）与 <b>企业级构建平台</b>（卖组织席位或任务结果）。计费锚不同，本质是"谁承担任务失败的风险"不同。</p>
+
+  <h3 class="sub">通用 Agent 订阅</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>产品</th><th>入门付费档</th><th>主力档</th><th>顶档</th><th>额度表述</th></tr></thead>
+      <tbody>
+        <tr><td><span class="model">ChatGPT</span><span class="vendor">OpenAI</span></td><td class="num">$19.99 <span class="pill">Plus</span></td><td class="num">同左</td><td class="num">$200 <span class="pill">Pro</span></td><td>"约 10× Plus" · <span class="pill hl">$500 Pro Max 为传闻</span></td></tr>
+        <tr><td><span class="model">Claude</span><span class="vendor">Anthropic</span></td><td class="num">$20 <span class="pill">Pro</span></td><td class="num">$100 <span class="pill">Max 5×</span></td><td class="num">$200 <span class="pill">Max 20×</span></td><td>倍数制（黑盒）</td></tr>
+        <tr><td><span class="model">Gemini</span><span class="vendor">Google</span></td><td class="num">$4.99 <span class="pill">AI Plus</span></td><td class="num">$19.99 <span class="pill">AI Pro</span></td><td class="num">$99.99–199.99 <span class="pill">Ultra</span></td><td>倍数制（黑盒）</td></tr>
+        <tr><td><span class="model">Grok</span><span class="vendor">xAI</span></td><td class="num">$8 <span class="pill">Plus</span></td><td class="num">$30 <span class="pill">Premium</span></td><td class="num">$200 <span class="pill">Ultra</span></td><td>"4× more usage"（黑盒）</td></tr>
+        <tr><td><span class="model">Manus</span><span class="vendor">通用 Agent</span></td><td class="num">$20 <span class="pill">Standard</span></td><td class="num">$40 <span class="pill">Custom</span></td><td class="num">$200 <span class="pill">Extended</span></td><td><span class="pill hl">积分制（白盒）</span> · 复杂任务 500–900 积分</td></tr>
+        <tr><td><span class="model">扣子空间</span><span class="vendor">字节 · 对标 Manus</span></td><td class="num"><span class="pill free">免费</span></td><td class="num">—</td><td class="num">—</td><td>发布时全量免费，直接卡位 Manus</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">Grok 于 2026-10-12 改版为 The X Subscription（SuperGrok 老用户保留、新用户不可购）；Gemini 免费档 10-09 起仅限 Flash-Lite。</p>
+
+  <h3 class="sub">企业级 Agent 平台</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>平台</th><th>计费锚</th><th>价格</th><th>一句话定位</th></tr></thead>
+      <tbody>
+        <tr><td><span class="model">Salesforce Agentforce</span></td><td><span class="pill hl">按结果</span></td><td class="num">$2 / 次成功对话</td><td>可靠性自信最强：敢对"成功"收费</td></tr>
+        <tr><td><span class="model">Microsoft Copilot Studio</span></td><td><span class="pill">消息条数</span></td><td class="num">$200/月含 25,000 条 · 超额 $0.01/条</td><td>已购 M365 组织的默认选项</td></tr>
+        <tr><td><span class="model">扣子 Coze 专业版</span></td><td><span class="pill">资源点</span></td><td class="num">智能体调用 ≈ ¥0.002/次 · 插件 ¥0.01/次</td><td>补贴定价，买生态规模</td></tr>
+        <tr><td><span class="model">Dify</span></td><td><span class="pill">席位</span></td><td class="num">$59–159/月 · 开源自托管免费</td><td>技术团队自建 Agent 的首选壳</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">腾讯元器（免费+流量扶持）、阿里百炼（平台免费、只收模型 token 费）等国内平台未形成公开收费档，完整口径见 <a href="https://github.com/wangshuang12138-beep/ai-frontier-kb/blob/main/docs/economics/01-agent-platform-pricing.md" target="_blank" rel="noopener">明细文档</a>。</p>
+</section>
+
+<!-- ================= ③ 差异分析 ================= -->
+<section id="analysis">
+  <div class="sec-head"><span class="sec-no">03</span><h2>对比与差异分析</h2></div>
+  <p class="sec-desc">十条判断，每条对应一个可执行的选型或谈判动作。展开论证见明细文档第三章。</p>
+
+  <h3 class="sub">大模型 API · 五条</h3>
+  <div class="insights">
+    <div class="card"><span class="idx">M-01</span><h4>输出/输入 5× 倍率是 Agent 时代的定向加价</h4><p>海外三家整齐划一不是巧合——Agent 链路输出 token 远多于输入。国内普遍 3–4×，在 Agent 场景实际比海外<b>便宜 20–40%</b>。只盯输入价是销售视角，看输出价才是架构师视角。</p></div>
+    <div class="card"><span class="idx">M-02</span><h4>缓存定价 = 算力供需的公开情报窗口</h4><p>缓存命中价占输入价比例：DeepSeek ≈2–3%、Claude 5–10%、Kimi 10%、GLM 25%。比例越低越敢按边际成本定价，<b>推理集群利用率压力越小</b>。</p></div>
+    <div class="card"><span class="idx">M-03</span><h4>三种定价创新对应三种经营逻辑</h4><p>DeepSeek 峰谷分时 = <b>电力/IDC 思维</b>；豆包按输入长度区间 = <b>产品设计思维</b>（替自己降峰值）；腾讯 Token Plan = <b>电信思维</b>（确定性换现金流）。</p></div>
+    <div class="card"><span class="idx">M-04</span><h4>免费档是生态武器，不是慈善</h4><p>GLM-4.7-Flash 全免费、ERNIE Lite 免费、Gemini 免费档砍到 Flash-Lite——共同点是<b>足够好到离不开、不够好到撑生产</b>。它们买走的是开发者的"第一次调用"。</p></div>
+    <div class="card"><span class="idx">M-05</span><h4>内外价差在收敛：国内价成为地板价</h4><p>Kimi 新一代全球同价；MiniMax 海外价 ≈ 国内五折价。趋势清晰：<b>国际价锚定 OpenAI 的 6–7 折</b>，国内价是地板。</p></div>
+  </div>
+
+  <h3 class="sub">智能体产品 · 五条</h3>
+  <div class="insights">
+    <div class="card"><span class="idx">A-01</span><h4>额度黑盒 vs 白盒，是两种信任策略</h4><p>ChatGPT/Claude/Gemini 的"×5 ×20"倍数制服务<b>厂商的定价自由</b>；Manus 积分制服务<b>用户的成本预期</b>。企业采购时白盒好过财务关，黑盒好做内部推广。</p></div>
+    <div class="card"><span class="idx">A-02</span><h4>定价颗粒度 = 对模型可靠性的置信度</h4><p>Agentforce 敢按"成功对话"收费，是把 Agent 可靠性风险<b>卖回给厂商</b>。还在按 token 计费的 Agent 平台，实质在说"我不能保证每次都成"。</p></div>
+    <div class="card"><span class="idx">A-03</span><h4>扣子资源点是补贴定价，差三个数量级</h4><p>智能体调用 ≈¥0.002/次 vs Manus ≈$1/次任务。不是成本差异，是<b>商业模式差异</b>：Manus 卖"任务结果"，扣子卖"生态入口"。</p></div>
+    <div class="card"><span class="idx">A-04</span><h4>$20/月价格锚在松动：底部免费、腰部固化、顶部无上限</h4><p>ChatGPT Plus / Claude Pro / Manus Standard 同锚 $20。但顶档快速分化至 $100–200，<b>$500 传闻档</b>说明头部 1% 用户支付意愿远超旧价目表。</p></div>
+    <div class="card"><span class="idx">A-05</span><h4>国内平台差一个收费世代</h4><p>国外在收"结果税 / 席位税"，国内还在<b>"平台免费、模型收费"</b>阶段——平台费本质是字节阿里腾讯的模型市场份额收购成本，且可能永远不收。</p></div>
+  </div>
+
+  <div class="callout">
+    <h4>交叉洞察：token 降价如何重估本地算力</h4>
+    <p>旗舰 API 输入 $2–4 / 输出 $10–20 每百万 tokens 且逐年 5–10 倍速降；MiniMax M3 已把 1M 上下文做到 ¥3.15/¥12.60。按此斜率，<b>两年内云端旗舰推理成本将低于自购 GPU 摊销成本</b>——"纯成本驱动"的本地部署论证正在失效。</p>
+    <p>本地算力剩余护城河只剩三个非价格变量：<b>数据不出域（合规）、时延（确定性）、断网可用（可靠性）</b>。结论不是"不要本地部署"，而是采购话术必须从"省 API 钱"转向"买确定性"——卖保险，而不是卖理财。</p>
+  </div>
+</section>
+
+<!-- ================= 来源 ================= -->
+<section id="sources">
+  <div class="sec-head"><span class="sec-no">附</span><h2>数据来源与纪律</h2></div>
+  <p class="sec-desc">官方宣称与第三方核验分开标注；查不到写"—"；价格为快照，标注检索日期 2026-11-06。详细逐档价格与全部二手来源链接见明细文档。</p>
+  <div class="src-grid">
+    <div class="src-col">
+      <h5>国外官方定价页</h5>
+      <ul>
+        <li><a href="https://openai.com/api/pricing/" target="_blank" rel="noopener">OpenAI API Pricing</a><span>2026-11-06</span></li>
+        <li><a href="https://www.anthropic.com/pricing" target="_blank" rel="noopener">Anthropic Pricing</a><span>2026-11-06</span></li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener">Gemini API Pricing</a><span>2026-11-06</span></li>
+        <li><a href="https://x.ai/api" target="_blank" rel="noopener">xAI API</a><span>2026-11-06</span></li>
+        <li><a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener">ChatGPT Plans</a><span>2026-11-06</span></li>
+        <li><a href="https://one.google.com/ai" target="_blank" rel="noopener">Google AI Plans</a><span>2026-11-06</span></li>
+        <li><a href="https://grok.com/plans" target="_blank" rel="noopener">Grok Plans</a><span>2026-11-06</span></li>
+        <li><a href="https://manus.im/pricing" target="_blank" rel="noopener">Manus Pricing</a><span>2026-11-06</span></li>
+      </ul>
+    </div>
+    <div class="src-col">
+      <h5>国内官方定价页</h5>
+      <ul>
+        <li><a href="https://api-docs.deepseek.com/zh-cn/quick_start/pricing" target="_blank" rel="noopener">DeepSeek 定价</a><span>2026-11-06</span></li>
+        <li><a href="https://platform.moonshot.cn/docs/pricing" target="_blank" rel="noopener">Kimi 定价</a><span>2026-11-06</span></li>
+        <li><a href="https://help.aliyun.com/zh/model-studio/model-pricing" target="_blank" rel="noopener">阿里百炼定价</a><span>2026-11-06</span></li>
+        <li><a href="https://open.bigmodel.cn/pricing" target="_blank" rel="noopener">智谱 BigModel 定价</a><span>2026-11-06</span></li>
+        <li><a href="https://www.volcengine.com/product/doubao" target="_blank" rel="noopener">火山引擎豆包定价</a><span>2026-11-06</span></li>
+        <li><a href="https://cloud.tencent.com/document/product/1729" target="_blank" rel="noopener">腾讯混元定价</a><span>2026-11-06</span></li>
+        <li><a href="https://platform.minimax.cn/docs/pricing/overview" target="_blank" rel="noopener">MiniMax 定价</a><span>2026-11-06</span></li>
+        <li><a href="https://www.coze.cn/pricing" target="_blank" rel="noopener">扣子定价</a><span>2026-11-06</span></li>
+      </ul>
+    </div>
+    <div class="src-col">
+      <h5>待确认项（诚实标注）</h5>
+      <ul>
+        <li>ChatGPT Pro Max $500<span>传闻未官宣</span></li>
+        <li>百度千帆逐档价<span>未逐档核验</span></li>
+        <li>扣子空间当前收费状态<span>未核验</span></li>
+        <li>腾讯元器收费档<span>未检索到</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <span>AI Frontier KB · 定价调研快照 2026-11-06 · 价格以厂商当期页面为准</span>
+    <div class="right">
+      <a href="https://github.com/wangshuang12138-beep/ai-frontier-kb" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
+      <a href="https://wangshuang12138-beep.github.io/ai-frontier-kb/" target="_blank" rel="noopener">知识库首页 ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Tabs：国外 / 国内
+  document.querySelectorAll('.tabs button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tabs button').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
