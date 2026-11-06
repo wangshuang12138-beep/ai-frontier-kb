@@ -247,26 +247,38 @@
 
 <!-- ================= 三分钟速览 ================= -->
 <section id="quick" style="border-top:0; padding-top:8px;">
-  <div class="sec-head"><span class="sec-no">速览</span><h2>三分钟速览</h2></div>
-  <p class="sec-desc">只想知道结论？看这 6 条。所有原始数据都还在下方，点开折叠块即可逐档核对。</p>
+  <div class="sec-head"><span class="sec-no">速览</span><h2>三分钟速览 · 零基础版</h2></div>
+  <p class="sec-desc">没接触过 AI 计费也能看懂：<b>先懂 3 个词 → 再看 1 张换算表 → 最后记 6 句话</b>。看完你就能向别人解释"AI 是怎么收费的"。下方折叠数据里是全部出处。</p>
+
+  <h3 class="sub">第 1 步 · 3 个词</h3>
   <div class="insights">
-    <div class="card"><span class="idx">1</span><h4>旗舰输出价：国外 $20，国内 ¥28–36</h4><p>GPT-5.6 Sol 与 Claude Opus 5.5 并列 $20/百万输出；国内旗舰 GLM-5.3 ¥28、qwen3.8-max ¥36。国内输出/输入倍率 3–4×（海外整齐 5×），<b>Agent 场景国内实际便宜 20–40%</b>。</p></div>
-    <div class="card"><span class="idx">2</span><h4>计费单位正在从 token 迁向"任务/结果"</h4><p>Manus 按积分扣任务、Agentforce $2/次成功对话、腾讯 WorkBuddy 直接卖 Token 月包。token 度量的是计算量，"一件事"才是用户心智——<b>谁按任务收费，谁就把不可预期的风险揽回自己身上</b>。</p></div>
-    <div class="card"><span class="idx">3</span><h4>缓存命中价 = 厂商边际成本情报</h4><p>命中价占输入价比例：DeepSeek ≈2–3%、Claude 5–10%、Kimi 10%、GLM 25%。比例越低，说明其算力越宽裕、越敢按边际成本定价。</p></div>
-    <div class="card"><span class="idx">4</span><h4>免费档是生态武器，不是慈善</h4><p>GLM-4.7-Flash 全免费、ERNIE Lite 免费、Gemini 免费档砍到 Flash-Lite——共同点是好用到离不开、又不够好用撑生产。买的不是用户，是<b>"第一次调用"</b>。</p></div>
-    <div class="card"><span class="idx">5</span><h4>$20/月价格锚在松动</h4><p>底部免费、腰部 $20 固化（Plus / Pro / Standard 同锚）、顶部分化到 $100–200（$500 传闻未官宣）。头部 1% 用户的支付意愿远超旧价目表。</p></div>
-    <div class="card"><span class="idx">6</span><h4>token 年降 5–10 倍，本地算力改卖"确定性"</h4><p>云端旗舰推理成本两年内将低于自购 GPU 摊销。"省 API 钱"的论证正在失效，剩余护城河只有<b>数据不出域、时延、断网可用</b>——卖保险，不是卖理财。</p></div>
+    <div class="card"><span class="idx">①</span><h4>Token：AI 世界里的"字"</h4><p>大模型按 token 收钱，<b>1 个 token ≈ 1 个汉字</b>。你发的每个字、它回的每个字都计费。所以"每百万 token $20"翻译成大白话就是：<b>每 100 万字收 20 美元</b>。</p></div>
+    <div class="card"><span class="idx">②</span><h4>输入 / 输出：你发的 vs 它回的</h4><p>你发的问题和资料叫"输入"，它给的回答叫"输出"。<b>输出价通常是输入的 3–5 倍</b>——"写"比"读"耗算力。所以答案越长越贵，光问什么决定不了花多少钱。</p></div>
+    <div class="card"><span class="idx">③</span><h4>缓存：重复内容打折</h4><p>同一份资料反复用（比如就同一份文档多轮追问），第二次起按"缓存命中价"算，最低 1 折。<b>各家折扣力度 = 各家算力宽裕程度</b>，这个细节下方有完整对比。</p></div>
   </div>
-  <h3 class="sub">关键数字</h3>
-  <div class="kpi-strip">
-    <div class="kpi"><b>$20.00</b><span>GPT-5.6 Sol / Claude Opus 5.5 · 每百万输出 tokens</span></div>
-    <div class="kpi"><b>$10.00</b><span>Gemini 4 Argon 输出 · 发布促销至 2026-11-30</span></div>
-    <div class="kpi"><b>¥1.50 / ¥3.00</b><span>deepseek-v4-pro 非高峰 输入/输出</span></div>
-    <div class="kpi"><b>¥1 / ¥4</b><span>混元 Hy3 输入/输出 · 国内旗舰地板价</span></div>
-    <div class="kpi"><b>≈¥0.002/次</b><span>扣子智能体调用 vs Manus ≈$1/次任务</span></div>
-    <div class="kpi"><b>$2/次</b><span>Agentforce 成功对话 · 按结果计费</span></div>
-    <div class="kpi"><b>¥39/月起</b><span>WorkBuddy 个人 Lite · 3500 万 tokens/月</span></div>
-    <div class="kpi"><b>¥68/月</b><span>豆包工作伙伴标准套餐 · 连续包月</span></div>
+
+  <h3 class="sub">第 2 步 · 一张换算表：这些事大概花多少钱</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>你做的事</th><th>国外旗舰<span class="vendor">GPT-5.6 / Claude / Gemini</span></th><th>国产旗舰<span class="vendor">GLM / qwen / 混元</span></th><th>免费 · 轻量档<span class="vendor">GLM-4.7-Flash 等</span></th></tr></thead>
+      <tbody>
+        <tr><td>问一个问题<span class="vendor">几百字进去 → 一千多字回答</span></td><td class="num">≈ ¥0.2</td><td class="num">≈ ¥0.05</td><td class="num">≈ ¥0.01 ～ 0</td></tr>
+        <tr><td>写一篇 5000 字报告<span class="vendor">含读你给的资料</span></td><td class="num">≈ ¥0.8</td><td class="num">≈ ¥0.2</td><td class="num">≈ ¥0.05</td></tr>
+        <tr><td>读一本 20 万字的书并写笔记</td><td class="num">≈ ¥6</td><td class="num">≈ ¥1.7</td><td class="num">≈ ¥0.2</td></tr>
+        <tr><td>一个月天天重度使用<span class="vendor">聊天 + 写作 + 查资料</span></td><td class="num">$19.99 包月<span class="vendor">ChatGPT Plus</span></td><td class="num" colspan="2">豆包 / DeepSeek / 元宝：<b>免费</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">注：本表是按 2026-11-06 刊例价折算的<b>估算值</b>，只为帮你感受量级（提问与回答按 1:3 估算，汇率按 1 美元≈7.1 元）。下方原始数据里，美元与人民币官价严格分列、不做折算。</p>
+
+  <h3 class="sub">第 3 步 · 6 句话</h3>
+  <div class="insights">
+    <div class="card"><span class="idx">1</span><h4>问答本身极便宜，贵的是"让它替你干活"</h4><p>问一句几分钱。但智能体（Agent）是你下目标、它自己动手——查资料、调工具、分步骤做完，背后是几十次模型调用，所以一次任务约 $1–2.5（Manus）。<b>贵的是自主行动，不是说话</b>。</p></div>
+    <div class="card"><span class="idx">2</span><h4>同一件事，国产比国外便宜一半以上</h4><p>上表每一行都成立。这不是"便宜没好货"：国产旗舰已接近国外水平，便宜的原因是算力和人力成本低。<b>日常用国产、关键任务用国外旗舰</b>，是当前主流打法。</p></div>
+    <div class="card"><span class="idx">3</span><h4>"按任务收费"比"按字收费"更高级</h4><p>按 token 收费：用了多少算力收多少钱，结果好坏不管。按任务收费：办成才收钱——Salesforce Agentforce 是 $2/次<b>成功</b>对话，失败不收。敢按任务收的厂商，是对自己的成功率有底气。</p></div>
+    <div class="card"><span class="idx">4</span><h4>个人聊天，基本不用花钱</h4><p>豆包、DeepSeek、腾讯元宝全免费，能力接近旗舰。$20/月那一档是给"每天离不开 + 必须用最强模型"的人准备的。<b>这个市场真正的收入来自企业</b>。</p></div>
+    <div class="card"><span class="idx">5</span><h4>价格在暴跌，别囤</h4><p>旗舰 token 价一年降 5–10 倍——今天 $20/百万输出的档位，明年可能 $5。<b>按需买、按月付</b>是唯一理性姿势；凡是"提前锁定价格"的销售话术都要警惕。</p></div>
+    <div class="card"><span class="idx">6</span><h4>卖设备的话术要变了</h4><p>云端这么便宜，"本地部署帮你省 API 钱"已经讲不通。还能卖的只剩三样：<b>数据不出公司、断网能用、响应更快</b>——从"卖理财"改成"卖保险"。</p></div>
   </div>
 </section>
 
