@@ -21,6 +21,14 @@ export default defineConfig({
         ],
       },
       {
+        text: '经济',
+        items: [
+          { text: '大模型 Token 计费方案', link: '/economics/00-llm-token-pricing' },
+          { text: '智能体收费方案', link: '/economics/01-agent-platform-pricing' },
+          { text: '定价对比与差异分析', link: '/economics/02-comparison-analysis' },
+        ],
+      },
+      {
         text: '硬件',
         items: [
           { text: '规格参数概念手册', link: '/hardware/00-specs-glossary' },
@@ -55,6 +63,16 @@ export default defineConfig({
             { text: 'NVIDIA 系：DGX Spark 与 Jetson', link: '/hardware/01-nvidia-jetson-dgx' },
             { text: '国产芯片边缘 AI 盒子', link: '/hardware/02-domestic-npu-boxes' },
             { text: '通用 AI 迷你主机（本地大模型）', link: '/hardware/03-minipc-workstations' },
+          ],
+        },
+      ],
+      '/economics/': [
+        {
+          text: 'AI 定价调研（2026-11）',
+          items: [
+            { text: '大模型 Token 计费方案', link: '/economics/00-llm-token-pricing' },
+            { text: '智能体收费方案', link: '/economics/01-agent-platform-pricing' },
+            { text: '定价对比与差异分析', link: '/economics/02-comparison-analysis' },
           ],
         },
       ],

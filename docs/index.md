@@ -52,6 +52,9 @@ features:
 | 安防视频结构化 / 多路推理 | [国产芯片 · 对比总表](/hardware/02-domestic-npu-boxes) |
 | 机器人 / CUDA 生态刚需 | [NVIDIA 系 · 对比总表](/hardware/01-nvidia-jetson-dgx) |
 | 读不懂参数表 | [规格参数概念手册](/hardware/00-specs-glossary) |
+| 大模型 API 怎么收费 | [Token 计费方案调研](/economics/00-llm-token-pricing) |
+| 智能体产品怎么收费 | [智能体收费方案调研](/economics/01-agent-platform-pricing) |
+| 定价策略差异分析 | [对比与差异分析](/economics/02-comparison-analysis) |
 | 写 AgentOS 材料 | [AgentOS 概念解读与全景](/concepts/agentos) |
 
-> 数据核实日期：首轮 2026-11-03 ｜ 维护：xca + Kimi Claw ｜ [GitHub 仓库](https://github.com/wangshuang12138-beep/ai-frontier-kb)
+> 数据核实日期：首轮 2026-11-03 ｜ 定价调研 2026-11-06 ｜ 维护：xca + Kimi Claw ｜ [GitHub 仓库](https://github.com/wangshuang12138-beep/ai-frontier-kb)
