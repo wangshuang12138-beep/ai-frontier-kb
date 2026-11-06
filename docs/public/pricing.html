@@ -166,6 +166,26 @@
   .callout p + p { margin-top: 8px; }
   .callout p b { color: var(--ink); }
 
+  /* ---------- 三分钟速览 ---------- */
+  .kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .kpi { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 12px; background: var(--bg-subtle); }
+  .kpi b { display: block; font-size: 19px; letter-spacing: -.01em; font-weight: 700; }
+  .kpi span { font-size: 12px; color: var(--muted); display: block; margin-top: 3px; line-height: 1.5; }
+
+  /* ---------- 折叠明细 ---------- */
+  details.raw { border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 12px; background: var(--bg); }
+  details.raw summary {
+    cursor: pointer; list-style: none; padding: 13px 18px;
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 14px;
+  }
+  details.raw summary::-webkit-details-marker { display: none; }
+  details.raw summary::before { content: "▸"; color: var(--muted); font-size: 12px; transition: transform .15s; align-self: center; }
+  details.raw[open] summary::before { transform: rotate(90deg); }
+  details.raw summary b { font-weight: 650; }
+  details.raw summary .sum-meta { color: var(--muted); font-size: 12.5px; font-weight: 500; }
+  details.raw .tbl-wrap { border: 0; border-top: 1px solid var(--line); border-radius: 0; }
+  details.raw p.tbl-note { padding: 0 18px 14px; margin-top: 10px; }
+
   /* ---------- 来源区 ---------- */
   .src-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
   .src-col { padding: 20px 22px; }
@@ -203,6 +223,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top"><span class="brand-mark"></span>AI 定价全景 <small>/ 2026-11</small></a>
     <div class="nav-links">
+      <a href="#quick">速览</a>
       <a href="#llm">① Token 计费</a>
       <a href="#agent">② 智能体收费</a>
       <a href="#analysis">③ 差异分析</a>
@@ -215,14 +236,39 @@
 <header class="hero" id="top">
   <div class="eyebrow"><span class="dot"></span>调研快照 · 2026-11-06 · 价格为快照价，采购前以厂商当期页面为准</div>
   <h1>大模型 Token 计费与智能体收费，一份能拿去开会的全景对比</h1>
-  <p class="lede">覆盖国内外 11 家大模型厂商 API 定价与 10 个智能体产品收费方案，全分档明细都在本页。美元与人民币分列不折算——厂商自己都不按购买力平价定价，折算只会制造虚假精度。每个关键数字可在文末核对官方来源。</p>
+  <p class="lede">覆盖国内外 11 家大模型厂商 API 定价与 13 个智能体产品收费方案，全分档明细都在本页（原始数据已折叠，点开即看）。美元与人民币分列不折算——厂商自己都不按购买力平价定价，折算只会制造虚假精度。每个关键数字可在文末核对官方来源。</p>
   <div class="hero-stats">
     <div class="stat"><b>11 家</b><span>大模型厂商 API 定价</span></div>
     <div class="stat"><b>40+ 档</b><span>模型分档价格明细</span></div>
-    <div class="stat"><b>10 个</b><span>智能体产品 / 平台</span></div>
+    <div class="stat"><b>13 个</b><span>智能体产品 / 平台</span></div>
     <div class="stat"><b>0 处</b><span>无来源数字（查不到写 —）</span></div>
   </div>
 </header>
+
+<!-- ================= 三分钟速览 ================= -->
+<section id="quick" style="border-top:0; padding-top:8px;">
+  <div class="sec-head"><span class="sec-no">速览</span><h2>三分钟速览</h2></div>
+  <p class="sec-desc">只想知道结论？看这 6 条。所有原始数据都还在下方，点开折叠块即可逐档核对。</p>
+  <div class="insights">
+    <div class="card"><span class="idx">1</span><h4>旗舰输出价：国外 $20，国内 ¥28–36</h4><p>GPT-5.6 Sol 与 Claude Opus 5.5 并列 $20/百万输出；国内旗舰 GLM-5.3 ¥28、qwen3.8-max ¥36。国内输出/输入倍率 3–4×（海外整齐 5×），<b>Agent 场景国内实际便宜 20–40%</b>。</p></div>
+    <div class="card"><span class="idx">2</span><h4>计费单位正在从 token 迁向"任务/结果"</h4><p>Manus 按积分扣任务、Agentforce $2/次成功对话、腾讯 WorkBuddy 直接卖 Token 月包。token 度量的是计算量，"一件事"才是用户心智——<b>谁按任务收费，谁就把不可预期的风险揽回自己身上</b>。</p></div>
+    <div class="card"><span class="idx">3</span><h4>缓存命中价 = 厂商边际成本情报</h4><p>命中价占输入价比例：DeepSeek ≈2–3%、Claude 5–10%、Kimi 10%、GLM 25%。比例越低，说明其算力越宽裕、越敢按边际成本定价。</p></div>
+    <div class="card"><span class="idx">4</span><h4>免费档是生态武器，不是慈善</h4><p>GLM-4.7-Flash 全免费、ERNIE Lite 免费、Gemini 免费档砍到 Flash-Lite——共同点是好用到离不开、又不够好用撑生产。买的不是用户，是<b>"第一次调用"</b>。</p></div>
+    <div class="card"><span class="idx">5</span><h4>$20/月价格锚在松动</h4><p>底部免费、腰部 $20 固化（Plus / Pro / Standard 同锚）、顶部分化到 $100–200（$500 传闻未官宣）。头部 1% 用户的支付意愿远超旧价目表。</p></div>
+    <div class="card"><span class="idx">6</span><h4>token 年降 5–10 倍，本地算力改卖"确定性"</h4><p>云端旗舰推理成本两年内将低于自购 GPU 摊销。"省 API 钱"的论证正在失效，剩余护城河只有<b>数据不出域、时延、断网可用</b>——卖保险，不是卖理财。</p></div>
+  </div>
+  <h3 class="sub">关键数字</h3>
+  <div class="kpi-strip">
+    <div class="kpi"><b>$20.00</b><span>GPT-5.6 Sol / Claude Opus 5.5 · 每百万输出 tokens</span></div>
+    <div class="kpi"><b>$10.00</b><span>Gemini 4 Argon 输出 · 发布促销至 2026-11-30</span></div>
+    <div class="kpi"><b>¥1.50 / ¥3.00</b><span>deepseek-v4-pro 非高峰 输入/输出</span></div>
+    <div class="kpi"><b>¥1 / ¥4</b><span>混元 Hy3 输入/输出 · 国内旗舰地板价</span></div>
+    <div class="kpi"><b>≈¥0.002/次</b><span>扣子智能体调用 vs Manus ≈$1/次任务</span></div>
+    <div class="kpi"><b>$2/次</b><span>Agentforce 成功对话 · 按结果计费</span></div>
+    <div class="kpi"><b>¥39/月起</b><span>WorkBuddy 个人 Lite · 3500 万 tokens/月</span></div>
+    <div class="kpi"><b>¥68/月</b><span>豆包工作伙伴标准套餐 · 连续包月</span></div>
+  </div>
+</section>
 
 <!-- ================= ① Token 计费 ================= -->
 <section id="llm">
@@ -241,7 +287,8 @@
 
   <h3 class="sub">全分档价格 · 国外厂商（USD / 1M tokens）</h3>
 
-  <h4 class="vendor-name">OpenAI <span>官方定价页 openai.com/api/pricing</span></h4>
+  <details class="raw">
+  <summary><b>OpenAI</b><span class="sum-meta">官方定价页 openai.com/api/pricing · GPT-5.6 三档 + GPT-5.5</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存输入</th><th>备注</th></tr></thead>
@@ -253,8 +300,10 @@
       </tbody>
     </table>
   </div>
+  </details>
 
-  <h4 class="vendor-name">Anthropic <span>官方定价页 anthropic.com/pricing · Batch 一律半价</span></h4>
+  <details class="raw">
+  <summary><b>Anthropic</b><span class="sum-meta">官方定价页 anthropic.com/pricing · Batch 一律半价 · Claude 全系 6 档</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存读</th><th>备注</th></tr></thead>
@@ -268,8 +317,10 @@
       </tbody>
     </table>
   </div>
+  </details>
 
-  <h4 class="vendor-name">Google <span>官方定价页 ai.google.dev/gemini-api/docs/pricing · Batch 5 折 · 缓存最高省 90%</span></h4>
+  <details class="raw">
+  <summary><b>Google</b><span class="sum-meta">官方定价页 ai.google.dev/gemini-api/docs/pricing · Batch 5 折 · 缓存最高省 90% · 全系 5 档</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th>备注</th></tr></thead>
@@ -282,8 +333,10 @@
       </tbody>
     </table>
   </div>
+  </details>
 
-  <h4 class="vendor-name">xAI <span>官方定价页 x.ai/api</span></h4>
+  <details class="raw">
+  <summary><b>xAI</b><span class="sum-meta">官方定价页 x.ai/api · Grok 4.7</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th>备注</th></tr></thead>
@@ -292,10 +345,12 @@
       </tbody>
     </table>
   </div>
+  </details>
 
   <h3 class="sub">全分档价格 · 国内厂商（CNY / 1M tokens，备注列附国际站美元价）</h3>
 
-  <h4 class="vendor-name">DeepSeek 深度求索 <span>中国厂商 · 官方 api-docs.deepseek.com · 业界唯一峰谷计价</span></h4>
+  <details class="raw">
+  <summary><b>DeepSeek 深度求索</b><span class="sum-meta">中国厂商 · 官方 api-docs.deepseek.com · 业界唯一峰谷计价</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存命中</th><th>备注</th></tr></thead>
@@ -306,8 +361,10 @@
     </table>
   </div>
   <p class="tbl-note">⚠ DeepSeek 人民币价为第三方平台读数（2026-04），与美元国际价核验值（datalearner 2026-11-01：非高峰 $0.66/$1.98、高峰 $1.32/$3.96）换算后存在出入，<b>以 api-docs.deepseek.com 当期页面为准</b>。</p>
+  </details>
 
-  <h4 class="vendor-name">Kimi 月之暗面 <span>中国厂商 · 官方 platform.moonshot.cn</span></h4>
+  <details class="raw">
+  <summary><b>Kimi 月之暗面</b><span class="sum-meta">中国厂商 · 官方 platform.moonshot.cn · K3.1 Pro 全球同价</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存命中</th><th>备注</th></tr></thead>
@@ -319,8 +376,10 @@
     </table>
   </div>
   <p class="tbl-note">Kimi 国内价（K3 ¥20/¥100）显著高于其国际站新一代价（K3.1 Pro $2/$10 ≈ ¥14/¥71）——新模型全球同价趋势的代表案例。</p>
+  </details>
 
-  <h4 class="vendor-name">阿里 · 百炼平台 <span>中国厂商 · 官方 help.aliyun.com 模型定价 · 新用户每模型 100 万 tokens 免费（90 天）</span></h4>
+  <details class="raw">
+  <summary><b>阿里 · 百炼平台</b><span class="sum-meta">中国厂商 · 官方 help.aliyun.com 模型定价 · 新用户每模型 100 万 tokens 免费（90 天）· qwen 五档</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th>备注</th></tr></thead>
@@ -333,8 +392,10 @@
       </tbody>
     </table>
   </div>
+  </details>
 
-  <h4 class="vendor-name">智谱 · BigModel <span>中国厂商 · 官方 open.bigmodel.cn/pricing</span></h4>
+  <details class="raw">
+  <summary><b>智谱 · BigModel</b><span class="sum-meta">中国厂商 · 官方 open.bigmodel.cn/pricing · GLM 五档（含免费档）</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存命中</th><th>备注</th></tr></thead>
@@ -347,8 +408,10 @@
       </tbody>
     </table>
   </div>
+  </details>
 
-  <h4 class="vendor-name">字节 · 火山方舟（豆包） <span>中国厂商 · 官方 volcengine.com · 首次开通每模型赠 50 万 tokens</span></h4>
+  <details class="raw">
+  <summary><b>字节 · 火山方舟（豆包）</b><span class="sum-meta">中国厂商 · 官方 volcengine.com · 首次开通每模型赠 50 万 tokens</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存命中</th><th>备注</th></tr></thead>
@@ -359,8 +422,10 @@
       </tbody>
     </table>
   </div>
+  </details>
 
-  <h4 class="vendor-name">腾讯 · 混元 <span>中国厂商 · 官方 cloud.tencent.com · Apache 2.0 开源</span></h4>
+  <details class="raw">
+  <summary><b>腾讯 · 混元</b><span class="sum-meta">中国厂商 · 官方 cloud.tencent.com · Apache 2.0 开源 · 含 Token Plan 订阅价</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存命中</th><th>备注</th></tr></thead>
@@ -370,8 +435,10 @@
     </table>
   </div>
   <p class="tbl-note"><b>Token Plan 月度订阅（批发价约为按量的 2–5 折）：</b>Hy 专属档 Lite ¥28 / Standard ¥78 / Pro ¥238 / Max ¥468；通用档（含 GLM/Kimi/MiniMax/DeepSeek）¥39 / ¥99 / ¥299 / ¥599。</p>
+  </details>
 
-  <h4 class="vendor-name">MiniMax <span>中国厂商 · 官方 platform.minimax.cn · priority 优先档 ×1.5</span></h4>
+  <details class="raw">
+  <summary><b>MiniMax</b><span class="sum-meta">中国厂商 · 官方 platform.minimax.cn · priority 优先档 ×1.5 · M3 五折刊例</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th class="num">缓存读取</th><th>备注</th></tr></thead>
@@ -382,8 +449,10 @@
       </tbody>
     </table>
   </div>
+  </details>
 
-  <h4 class="vendor-name">百度 · 千帆平台 <span>中国厂商 · 官方 cloud.baidu.com</span></h4>
+  <details class="raw">
+  <summary><b>百度 · 千帆平台</b><span class="sum-meta">中国厂商 · 官方 cloud.baidu.com · 逐档价未核验</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>模型</th><th class="num">输入</th><th class="num">输出</th><th>备注</th></tr></thead>
@@ -392,12 +461,36 @@
       </tbody>
     </table>
   </div>
+  </details>
 </section>
 
 <!-- ================= ② 智能体收费 ================= -->
 <section id="agent">
   <div class="sec-head"><span class="sec-no">02</span><h2>智能体（Agent）收费方案</h2></div>
   <p class="sec-desc">分两类：<b>通用 Agent 订阅</b>（卖个人额度，按"×N 倍数"或积分表述）与 <b>企业级构建平台</b>（卖组织席位或任务结果）。计费锚不同，本质是"谁承担任务失败的风险"不同。</p>
+
+  <h3 class="sub">热门智能体收费一览</h3>
+  <p class="sec-desc" style="margin-bottom:16px;">按"国内 C 端 → 办公 / 企业 → 海外通用 Agent"分组。价格为 2026-11 快照，未公开报价的诚实标注。</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>产品</th><th>厂商</th><th>收费模式</th><th>价格（快照）</th><th>一句话</th></tr></thead>
+      <tbody>
+        <tr><td><span class="model">豆包</span></td><td>字节跳动</td><td>免费</td><td>C 端免费（MAU 4.08 亿，国内第一）</td><td>流量入口，靠生态而非订阅变现</td></tr>
+        <tr><td><span class="model">腾讯元宝</span></td><td>腾讯</td><td>免费</td><td>免费（MAU 1.2 亿，2026-02 环比 +103.7%）</td><td>微信生态导流，增长最快</td></tr>
+        <tr><td><span class="model">通义千问 App</span></td><td>阿里</td><td>免费</td><td>C 端免费，API 按量</td><td>与百炼 API 价盘联动</td></tr>
+        <tr><td><span class="model">Kimi 智能助手</span></td><td>月之暗面</td><td>免费</td><td>C 端免费，API 按量（K3.1 Pro $2/$10）</td><td>长文本心智 + 新一代全球同价</td></tr>
+        <tr><td><span class="model">智谱清言</span></td><td>智谱 AI</td><td>免费</td><td>C 端免费</td><td>清言引流，API 才是收入</td></tr>
+        <tr><td><span class="model">DeepSeek</span></td><td>深度求索</td><td>免费</td><td>网页 / App 免费，API 峰谷计价</td><td>免费 C 端 + 业界唯一分时定价</td></tr>
+        <tr><td><span class="model">WorkBuddy</span></td><td>腾讯</td><td>Token 月包</td><td>个人 Lite ¥39/月（3500 万 tokens）· Standard ¥99 · Pro ¥299；企业版月预算 ¥5,000–20,000；私有化部署年费数十万起</td><td>2026 年推的 AI 办公智能体平台，兼容 OpenClaw / CodeBuddy / Cursor</td></tr>
+        <tr><td><span class="model">TeleAgent</span></td><td>中国电信</td><td>政企定制</td><td><span class="pill warn">未公开报价</span>（星辰大模型 + 华为昇腾，支持私有化部署）</td><td>2026-07-18 WAIC 发布，运营商系入场</td></tr>
+        <tr><td><span class="model">豆包工作伙伴</span></td><td>字节（原飞书 aily）</td><td>订阅</td><td>标准套餐连续包月 ¥68/月（免费版 5 倍额度）· 加强 ¥200/月（20 倍）；对话免费、产物收费，2026-09-01 起"主动工作"功能计费</td><td>2026-08-14 更名，主打办公场景</td></tr>
+        <tr><td><span class="model">扣子空间</span></td><td>字节</td><td>—</td><td>发布时全量免费，当前收费状态<span class="pill warn">未核验</span></td><td>对标 Manus 的通用 Agent</td></tr>
+        <tr><td><span class="model">Manus</span></td><td>蝴蝶效应（新加坡）</td><td>积分订阅</td><td>免费 300 积分/日 · Standard $20（4,000 积分）· Custom $40 · Extended $200；复杂任务单次 500–900 积分</td><td>按任务扣费的积分制定价标杆</td></tr>
+        <tr><td><span class="model">Genspark</span></td><td>MainFunc（美国）</td><td>积分订阅</td><td>Free（100 积分/天）· Plus $24.99（10,000 积分）· Pro $249.99（125,000）· Team $30–35/座</td><td>"AI 工作站"：研究页 ~5–80 积分、幻灯 100+、视频最贵</td></tr>
+        <tr><td><span class="model">Devin</span></td><td>Cognition（美国）</td><td>席位 + 用量</td><td>Free · Pro $20 · Max $200 · Teams $80 + $40/座 · Enterprise 定制（ACU），超量按 API 价</td><td>编程 Agent 标杆；Windsurf 已并入 Devin Desktop</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <h3 class="sub">通用 Agent 订阅 · 五产品同档对比</h3>
   <div class="tbl-wrap">
@@ -416,7 +509,8 @@
 
   <h3 class="sub">国内企业级 / 平台型</h3>
 
-  <h4 class="vendor-name">字节 · 扣子 Coze 专业版 <span>资源点制 · 官方 coze.cn/pricing</span></h4>
+  <details class="raw">
+  <summary><b>字节 · 扣子 Coze 专业版</b><span class="sum-meta">资源点制 · 官方 coze.cn/pricing</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>项目</th><th>价格</th><th>说明</th></tr></thead>
@@ -429,8 +523,10 @@
       </tbody>
     </table>
   </div>
+  </details>
 
-  <h4 class="vendor-name">其他平台一览</h4>
+  <details class="raw">
+  <summary><b>其他平台一览</b><span class="sum-meta">扣子空间 · Dify · 腾讯元器 · 千帆 AppBuilder · 百炼 · 讯飞星火</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>平台</th><th>模式</th><th>价格</th><th>备注</th></tr></thead>
@@ -444,8 +540,11 @@
       </tbody>
     </table>
   </div>
+  </details>
 
   <h3 class="sub">国外企业级平台</h3>
+  <details class="raw">
+  <summary><b>Agentforce · Copilot Studio · Vertex AI Agent Builder</b><span class="sum-meta">按结果 / 按消息 / token+席位</span></summary>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>平台</th><th>计费锚</th><th>价格</th><th>一句话定位</th></tr></thead>
@@ -456,6 +555,7 @@
       </tbody>
     </table>
   </div>
+  </details>
 </section>
 
 <!-- ================= ③ 差异分析 ================= -->
@@ -505,6 +605,8 @@
         <li><a href="https://one.google.com/ai" target="_blank" rel="noopener">Google AI Plans</a><span>2026-11-06</span></li>
         <li><a href="https://grok.com/plans" target="_blank" rel="noopener">Grok Plans</a><span>2026-11-06</span></li>
         <li><a href="https://manus.im/pricing" target="_blank" rel="noopener">Manus Pricing</a><span>2026-11-06</span></li>
+        <li><a href="https://www.genspark.ai/helpcenter/membership-plans" target="_blank" rel="noopener">Genspark Membership Plans</a><span>2026-11-06</span></li>
+        <li><a href="https://devin.ai/pricing" target="_blank" rel="noopener">Devin Pricing</a><span>2026-11-06</span></li>
       </ul>
     </div>
     <div class="src-col">
@@ -518,6 +620,7 @@
         <li><a href="https://cloud.tencent.com/document/product/1729" target="_blank" rel="noopener">腾讯混元定价</a><span>2026-11-06</span></li>
         <li><a href="https://platform.minimax.cn/docs/pricing/overview" target="_blank" rel="noopener">MiniMax 定价</a><span>2026-11-06</span></li>
         <li><a href="https://www.coze.cn/pricing" target="_blank" rel="noopener">扣子定价</a><span>2026-11-06</span></li>
+        <li><a href="https://aily.feishu.cn/hc/1u7kleqg_1cnvbb55" target="_blank" rel="noopener">豆包工作伙伴计费说明</a><span>2026-11-06</span></li>
       </ul>
     </div>
     <div class="src-col">
@@ -529,6 +632,8 @@
         <li>扣子空间收费状态<span>未核验</span></li>
         <li>腾讯元器收费档<span>未检索到</span></li>
         <li>讯飞星火智能体<span>未核验</span></li>
+        <li>TeleAgent 报价<span>未公开（政企定制）</span></li>
+        <li>WorkBuddy 各档价<span>第三方读数，以腾讯云页面为准</span></li>
       </ul>
     </div>
   </div>
@@ -545,7 +650,10 @@
 </footer>
 
 <script>
-  // 锚点淡入即可；全量信息直出，无需 Tab 切换
+  // 打印时自动展开全部折叠明细
+  window.addEventListener('beforeprint', () => {
+    document.querySelectorAll('details').forEach(d => { d.open = true; });
+  });
 </script>
 </body>
 </html>
